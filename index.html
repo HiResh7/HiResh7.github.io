@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0F2E2B">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="description" content="מדריך הטיול לפאפוס ופיאה, קפריסין — 26–29 באוגוסט">
+<title>אקאמאס 4 — המדריך שלנו לקפריסין</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&family=Suez+One&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   אקאמאס 4 — עיצוב
+   פלטה: חול גיר, ירוק־ים עמוק, חלודה של הספינה אדרו 3, טורקיז הלגונה
+   ============================================================ */
+:root{
+  --deep:#0F2E2B;        /* ירוק־ים עמוק — שלד האפליקציה */
+  --deep-2:#16403B;
+  --rust:#B8482B;        /* חלודת ספינת אדרו 3 — כפתורי פעולה */
+  --rust-dark:#973A22;
+  --lagoon:#127A7E;      /* טורקיז הלגונה הכחולה — ניווט */
+  --gold:#C08A2E;        /* עשב יבש / גיר — דירוגים */
+  --paper:#EDEFE8;       /* אבן גיר בהירה — רקע */
+  --card:#FFFFFF;
+  --ink:#171A16;
+  --ink-soft:#4E564C;
+  --line:#D8DCD1;
+  --shadow:0 1px 2px rgba(15,46,43,.06),0 8px 24px -12px rgba(15,46,43,.22);
+  --nav-h:70px;
+  --r:18px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  font-family:'Assistant',system-ui,-apple-system,'Segoe UI',sans-serif;
+  background:var(--paper);color:var(--ink);
+  font-size:17px;line-height:1.6;font-weight:400;
+  padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom));
+  overscroll-behavior-y:none;
+}
+h1,h2,h3{font-family:'Suez One',serif;font-weight:400;line-height:1.2;margin:0}
+button{font-family:inherit;font-size:inherit;cursor:pointer;border:none;background:none;color:inherit}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid var(--lagoon);outline-offset:2px;border-radius:6px}
+
+/* ---------- כותרת עליונה ---------- */
+.topbar{
+  position:sticky;top:0;z-index:60;background:var(--deep);color:#fff;
+  padding:calc(env(safe-area-inset-top) + 12px) 16px 12px;
+  box-shadow:0 2px 14px rgba(15,46,43,.28);
+}
+.topbar__row{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.topbar h1{font-size:22px;letter-spacing:-.2px}
+.topbar__sub{font-size:12.5px;opacity:.72;font-weight:600;letter-spacing:.3px;white-space:nowrap}
+
+/* ---------- מסננת רדיוס ---------- */
+.radius{display:flex;gap:8px;margin-top:12px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.radius::-webkit-scrollbar{display:none}
+.radius__label{font-size:12px;opacity:.6;align-self:center;white-space:nowrap;font-weight:700;padding-left:2px}
+.chip{
+  flex:0 0 auto;padding:9px 15px;border-radius:999px;font-size:14px;font-weight:700;
+  background:rgba(255,255,255,.11);color:#fff;min-height:38px;
+  border:1.5px solid transparent;transition:background .15s,border-color .15s;
+}
+.chip[aria-pressed="true"]{background:#fff;color:var(--deep);border-color:#fff}
+
+/* ---------- מסכים ---------- */
+main{padding:18px 14px 28px;max-width:640px;margin:0 auto}
+.screen{display:none;animation:rise .28s ease both}
+.screen.is-active{display:block}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+.screen__intro{
+  background:var(--deep-2);color:#fff;border-radius:var(--r);
+  padding:18px 18px 20px;margin-bottom:18px;
+}
+.screen__intro h2{font-size:24px;margin-bottom:8px}
+.screen__intro p{margin:0;font-size:15.5px;line-height:1.62;opacity:.9}
+.screen__intro strong{color:#F2C87A;font-weight:700}
+
+.count{
+  font-size:13px;font-weight:700;color:var(--ink-soft);
+  margin:0 2px 12px;display:flex;align-items:center;gap:8px;
+}
+.count::after{content:"";flex:1;height:1px;background:var(--line)}
+
+/* ---------- כרטיס ---------- */
+.card{
+  background:var(--card);border-radius:var(--r);margin-bottom:14px;
+  box-shadow:var(--shadow);overflow:hidden;border:1px solid var(--line);
+}
+.card.is-hidden{display:none}
+.card__head{
+  width:100%;text-align:right;padding:16px 16px 14px;display:block;
+  min-height:56px;
+}
+.card__top{display:flex;gap:10px;align-items:flex-start;justify-content:space-between}
+.card__name{font-size:19.5px;font-family:'Suez One',serif;line-height:1.25;flex:1}
+.card__chev{
+  flex:0 0 30px;height:30px;border-radius:50%;background:var(--paper);
+  display:grid;place-items:center;transition:transform .25s;margin-top:2px;
+}
+.card.is-open .card__chev{transform:rotate(180deg);background:var(--rust)}
+.card.is-open .card__chev svg{stroke:#fff}
+.card__chev svg{width:16px;height:16px;stroke:var(--deep);stroke-width:2.6;fill:none}
+
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.badge{
+  font-size:13px;font-weight:700;padding:4px 10px;border-radius:8px;
+  background:var(--paper);color:var(--ink-soft);white-space:nowrap;
+}
+.badge--star{background:#FBF2DC;color:#8A5F14}
+.badge--price{background:#E6F1F0;color:#0B5D60}
+.badge--tag{background:#F6E7E2;color:#8E3620}
+
+/* ---------- מסילת המרחקים (אלמנט החתימה) ---------- */
+.rail{display:flex;align-items:center;gap:0;margin-top:14px;padding:0 2px}
+.rail__stop{display:flex;flex-direction:column;align-items:center;gap:3px;flex:0 0 auto;width:78px}
+.rail__pin{
+  width:11px;height:11px;border-radius:50%;background:var(--deep);
+  box-shadow:0 0 0 3.5px rgba(15,46,43,.13);
+}
+.rail__stop--b .rail__pin{background:var(--rust);box-shadow:0 0 0 3.5px rgba(184,72,43,.15)}
+.rail__min{font-size:16px;font-weight:800;line-height:1.1;font-variant-numeric:tabular-nums}
+.rail__who{font-size:10.5px;font-weight:700;color:var(--ink-soft);letter-spacing:.2px}
+.rail__line{
+  flex:1;height:0;border-top:2.5px dotted var(--line);margin:0 -4px;
+  position:relative;top:-13px;
+}
+.rail__km{
+  font-size:10.5px;color:var(--ink-soft);font-weight:700;
+  position:absolute;top:-9px;right:50%;transform:translateX(50%);
+  background:var(--card);padding:0 6px;white-space:nowrap;
+}
+
+/* ---------- גוף הכרטיס ---------- */
+.card__body{display:none;padding:0 16px 16px;border-top:1px solid var(--line);margin-top:14px}
+.card.is-open .card__body{display:block}
+.card__body h4{
+  font-family:'Assistant',sans-serif;font-size:12px;font-weight:800;letter-spacing:.8px;
+  color:var(--ink-soft);margin:18px 0 5px;
+}
+.card__body h4:first-child{margin-top:16px}
+.card__body p{margin:0;font-size:16px;line-height:1.68}
+.card__body p+p{margin-top:9px}
+.quote{
+  border-right:3px solid var(--gold);padding:2px 12px 2px 0;
+  font-size:15.5px;color:var(--ink-soft);font-style:normal;
+}
+.addr{font-size:15px;color:var(--ink-soft)}
+.note{
+  background:#FDF6E9;border:1px solid #EBD9AE;border-radius:12px;
+  padding:11px 13px;font-size:14.5px;line-height:1.55;margin-top:14px;color:#6B4E12;
+}
+.note strong{color:#4A3406}
+.note--warn{background:#FBEDE9;border-color:#EFCEC3;color:#8A3B25}
+.note--warn strong{color:#6B2614}
+
+/* ---------- כפתורי פעולה ---------- */
+.actions{display:grid;gap:9px;margin-top:16px}
+.actions--2{grid-template-columns:1fr 1fr}
+.btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  min-height:54px;border-radius:14px;font-size:16.5px;font-weight:800;
+  padding:0 14px;text-align:center;transition:transform .1s,filter .15s;
+}
+.btn:active{transform:scale(.975)}
+.btn svg{width:19px;height:19px;flex:0 0 19px}
+.btn--nav{background:var(--lagoon);color:#fff}
+.btn--map{background:#E6F1F0;color:#0B5D60;border:1.5px solid #BFDDDC}
+.btn--go{background:var(--rust);color:#fff}
+.btn--call{background:var(--deep);color:#fff}
+.btn--flat{background:var(--paper);color:var(--ink);border:1.5px solid var(--line)}
+
+/* ---------- לוח מידע ---------- */
+.info{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:6px 16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.info__row{display:flex;justify-content:space-between;gap:14px;padding:13px 0;border-bottom:1px solid var(--line);font-size:16px}
+.info__row:last-child{border-bottom:none}
+.info__row dt{color:var(--ink-soft);font-weight:600;margin:0}
+.info__row dd{margin:0;font-weight:700;text-align:left}
+
+/* ---------- יומן המסלול ---------- */
+.day{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.day__tag{display:inline-block;background:var(--deep);color:#fff;font-size:12.5px;font-weight:800;padding:4px 11px;border-radius:8px;letter-spacing:.3px}
+.day h3{font-size:20px;margin:11px 0 4px}
+.day__note{font-size:14px;color:var(--ink-soft);margin:0 0 12px;font-weight:600}
+.slot{display:flex;gap:12px;padding:11px 0;border-top:1px dashed var(--line)}
+.slot__time{flex:0 0 60px;font-size:13.5px;font-weight:800;color:var(--rust);padding-top:2px;font-variant-numeric:tabular-nums}
+.slot__what{font-size:16px;line-height:1.55}
+.slot__what b{font-weight:800}
+
+/* ---------- צ'קליסט ---------- */
+.task{
+  display:flex;gap:13px;align-items:flex-start;width:100%;text-align:right;
+  background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:14px;margin-bottom:9px;box-shadow:var(--shadow);min-height:56px;
+}
+.task__box{
+  flex:0 0 26px;height:26px;border-radius:8px;border:2.5px solid var(--line);
+  display:grid;place-items:center;margin-top:1px;transition:background .15s,border-color .15s;
+}
+.task.is-done .task__box{background:var(--lagoon);border-color:var(--lagoon)}
+.task__box svg{width:15px;height:15px;stroke:#fff;stroke-width:3.2;fill:none;opacity:0}
+.task.is-done .task__box svg{opacity:1}
+.task__txt{font-size:16px;line-height:1.5}
+.task.is-done .task__txt{opacity:.45;text-decoration:line-through}
+.task__why{display:block;font-size:13.5px;color:var(--ink-soft);font-weight:600;margin-top:2px}
+
+/* ---------- ניווט תחתון ---------- */
+.tabs{
+  position:fixed;bottom:0;right:0;left:0;z-index:70;
+  background:var(--deep);display:flex;
+  padding-bottom:env(safe-area-inset-bottom);
+  box-shadow:0 -2px 18px rgba(15,46,43,.3);
+}
+.tab{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:3px;height:var(--nav-h);color:rgba(255,255,255,.55);position:relative;
+  transition:color .15s;
+}
+.tab svg{width:23px;height:23px;stroke:currentColor;stroke-width:1.9;fill:none}
+.tab span{font-size:10.5px;font-weight:700;letter-spacing:0}
+.tab svg{width:21px;height:21px}
+@media (max-width:360px){.tab span{font-size:9.5px}.tab svg{width:19px;height:19px}}
+.tab[aria-selected="true"]{color:#fff}
+.tab[aria-selected="true"]::before{
+  content:"";position:absolute;top:0;right:22%;left:22%;height:3px;
+  background:var(--rust);border-radius:0 0 4px 4px;
+}
+
+/* ---------- כותרת תחתונה ---------- */
+.foot{text-align:center;font-size:13px;color:var(--ink-soft);padding:22px 10px 6px;line-height:1.6}
+
+@media (min-width:520px){
+  body{font-size:17.5px}
+  .card__name{font-size:21px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001s!important;transition-duration:.001s!important}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar__row">
+    <h1 id="scr-title">אקאמאס 4</h1>
+    <div class="topbar__sub">26–29.8 · פאפוס</div>
+  </div>
+  <div class="radius" role="group" aria-label="סינון לפי זמן נסיעה מהמלון">
+    <span class="radius__label">מהמלון:</span>
+    <button class="chip" data-radius="12" aria-pressed="false">עד 12 דק׳</button>
+    <button class="chip" data-radius="30" aria-pressed="false">עד 30 דק׳</button>
+    <button class="chip" data-radius="999" aria-pressed="true">הכול</button>
+  </div>
+</header>
+
+<main>
+  <section class="screen is-active" id="s-home" role="tabpanel" aria-labelledby="t-home"></section>
+  <section class="screen" id="s-offroad" role="tabpanel" aria-labelledby="t-offroad"></section>
+  <section class="screen" id="s-sea" role="tabpanel" aria-labelledby="t-sea"></section>
+  <section class="screen" id="s-food" role="tabpanel" aria-labelledby="t-food"></section>
+  <section class="screen" id="s-night" role="tabpanel" aria-labelledby="t-night"></section>
+  <section class="screen" id="s-limassol" role="tabpanel" aria-labelledby="t-limassol"></section>
+  <section class="screen" id="s-info" role="tabpanel" aria-labelledby="t-info"></section>
+  <p class="foot">
+    המחירים והזמנים נאספו מהאתרים הרשמיים ומאתרי הביקורות באוגוסט 2026 והם <b>הערכה</b>.<br>
+    תמיד מאמתים בטלפון לפני שנוסעים. זמני הנסיעה מחושבים בקירוב — ווייז יגיד את האמת.
+  </p>
+</main>
+
+<nav class="tabs" role="tablist" aria-label="ניווט ראשי">
+  <button class="tab" id="t-home" role="tab" aria-selected="true" data-screen="s-home" data-title="אקאמאס 4">
+    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20h14V9.5"/></svg><span>בית</span>
+  </button>
+  <button class="tab" id="t-offroad" role="tab" aria-selected="false" data-screen="s-offroad" data-title="שטח">
+    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="6.5" cy="17" r="3"/><circle cx="17.5" cy="17" r="3"/><path d="M9.5 17h5M4 14V9h7l3 5"/><path d="M11 9l2-3h3"/></svg><span>שטח</span>
+  </button>
+  <button class="tab" id="t-sea" role="tab" aria-selected="false" data-screen="s-sea" data-title="ים ואקסטרים">
+    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M2 17c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2"/><path d="M4 13l8-9 8 9"/><path d="M12 4v9"/></svg><span>ים</span>
+  </button>
+  <button class="tab" id="t-food" role="tab" aria-selected="false" data-screen="s-food" data-title="אוכל">
+    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v8a2.5 2.5 0 0 0 5 0V3"/><path d="M8.5 11v10"/><path d="M17 3c-1.5 2-2 3.5-2 5.5S16 12 17 12s2-1.5 2-3.5S18.5 5 17 3z"/><path d="M17 12v9"/></svg><span>אוכל</span>
+  </button>
+  <button class="tab" id="t-night" role="tab" aria-selected="false" data-screen="s-night" data-title="לילה">
+    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h14l-7 8z"/><path d="M12 12v7"/><path d="M8.5 20h7"/></svg><span>לילה</span>
+  </button>
+  <button class="tab" id="t-limassol" role="tab" aria-selected="false" data-screen="s-limassol" data-title="לימסול · קניות">
+    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l1 12H5z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>לימסול</span>
+  </button>
+  <button class="tab" id="t-info" role="tab" aria-selected="false" data-screen="s-info" data-title="מידע ורשימות">
+    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6"/><path d="M12 7.6v.6"/></svg><span>מידע</span>
+  </button>
+</nav>
+
+<script>
+/* ============================================================
+   נתונים
+   hotel/peyia = [ק"מ, דקות נסיעה] — הערכה
+   ============================================================ */
+const HOTEL = "Cap St Georges Hotel & Resort, 3 Maniki Street, Peyia 8570, Cyprus";
+
+const DATA = {
+/* ==================== שטח ==================== */
+offroad:[
+{
+  name:"Golden Ride Rentals & Safari",
+  tags:["באגי","טרקטורון","הכי קרוב"],
+  stars:"4.7 / 5 · טריפאדוויזר",
+  price:"השכרה עצמית מ־€120 ליום לבאגי דו־מושבי (+ פיקדון €500 שחוזר) · ספארי מודרך מ־€60 לרכב",
+  addr:"Agiou Georgiou, Pegeia 8575 (הרחוב שמוביל למלון שלכם)",
+  hotel:[6,9], peyia:[3,6],
+  desc:"זו ההמלצה הראשונה שלנו, ולא במקרה — הם היחידים באזור שמציעים חמישה מסלולי ספארי שונים, מרמת מתחילים ועד מסלול של שש שעות על שפת מצוקים בדרכי הר צרות. הם גם ממוקמים בקוראל ביי במקום בפאפוס, כלומר אתם מתחילים לנסוע בעפר אחרי כמה דקות ולא אחרי חצי שעה של אספלט. אפשר גם פשוט לשכור באגי לבד בלי מדריך ולעשות את המסלול לחוף לארה בקצב שלכם.",
+  reviews:"הביקורות חוזרות על אותם דברים: הרכבים חדשים ובמצב מצוין (מבקר אחד ציין באגי עם 2,000 ק״מ בלבד), תהליך ההשכרה לוקח עשר דקות, והצוות מסביר בסבלנות את מערכת ההנעה הכפולה. מבקר שהשכיר טרקטורונים בקפריסין אצל כמה חברות כתב שהם היוצאים מן הכלל. החיסרון היחיד שחוזר: הפיקדון גבוה וצריך כרטיס עם מסגרת.",
+  note:"נהג חייב רישיון נהיגה פיזי בתוקף (קטגוריה B) — צילום או אפליקציה לא יתקבלו. גיל מינימלי לנהג 18, לנוסע על טרקטורון 12. קחו בנדנה או מסכה לפה, האבק שם רצחני.",
+  site:"https://www.tripadvisor.com/Attraction_Review-g190384-d8489367-Reviews-Golden_Ride_Rentals_Safari-Paphos_Paphos_District.html",
+  siteLabel:"ביקורות ופרטים",
+  tel:"+35726621845"
+},
+{
+  name:"Chris Andreou — ספארי טרקטורונים ובאגי",
+  tags:["באגי","טרקטורון","ג׳יפ קטן"],
+  stars:"4.8 / 5 · 153 ביקורות",
+  price:"‎€70–95 לאדם למסלול של 3–4 שעות (הערכה, תלוי ברכב ובמספר האנשים)",
+  addr:"משרד בקוראל ביי, פאפוס · נקודת מפגש עם הסעה חינם מהמשרד",
+  hotel:[7,11], peyia:[3,6],
+  desc:"ותיקי האזור, ומפעילים שלושה מסלולים שמתאימים בדיוק לכם: אקאמאס ומפלי אדוניס (4–5 שעות), מערות הים והספינה הטרופה עם מפלי אדוניס (3 שעות), וספארי בוקר לחוף לארה (3 שעות). הם עובדים בעיקר שלישי עד שישי, מה שמסתדר יפה עם התאריכים שלכם. אפשר לבחור בין טרקטורון, באגי או מיני־ג׳יפ.",
+  reviews:"דירוג 4.8 מתוך 153 ביקורות, מהגבוהים באזור. מה שחוזר: המדריכים נוסעים מקדימה ומחכים לאיטיים, ההסברים על האזור מעניינים, והמסלול לא ממהר. קבוצה אחת שילמה €350 על באגי פרטי לחמש שעות עם מדריך אישי — יקר, אבל הם כתבו שזה היה שווה.",
+  note:"הזמנה מראש מול מקדמה בפייפאל. באוגוסט המסלולים נמכרים — אל תחכו ליום שלפני.",
+  site:"https://chrisandreourentals.com/buggy-safaris",
+  siteLabel:"אתר רשמי"
+},
+{
+  name:"The Super Team — ספארי ג׳יפים לאקאמאס ולערוץ אווקאס",
+  tags:["ג׳יפ 4×4","יום שלם"],
+  stars:"מדורג גבוה · ביטול חופשי",
+  price:"כ־€65–75 לאדם · 8.5 שעות",
+  addr:"נקודת מפגש: Sea Caves, Agiou Georgiou Road — שלוש דקות מהמלון",
+  hotel:[3,5], peyia:[6,10],
+  desc:"אם אתם רוצים לראות את כל אקאמאס בלי להיות אחראים על ההגה, זה המסלול. הוא לוקח אתכם דרך מערות הים, ערוץ אווקאס, הלגונה הכחולה לשחייה, וכפרים קטנים בדרך. היתרון הגדול לעומת כל ספארי אחר מפאפוס: נקודת המפגש היא ממש בשכונה שלכם, אז אתם לא מבזבזים שעה בהסעות.",
+  reviews:"המבקרים מדגישים את המדריכים המקומיים ואת האווירה הנינוחה והמצחיקה. יש תלונות חוזרות בקטגוריה הזו בכלל על סיורי ג׳יפים מאורגנים שהם יקרים מדי לעומת השכרה עצמית — שווה להשוות מול Golden Ride לפני שסוגרים.",
+  note:"לא מומלץ למי שיש לו בעיות גב או צוואר — הדרכים באקאמאס מקרקשות באמת. ארוחת צהריים לא כלולה.",
+  site:"https://www.viator.com/Paphos-tours/4WD-ATV-and-Off-Road-Tours/d5629-g9-c32",
+  siteLabel:"השוואת מסלולים והזמנה"
+},
+{
+  name:"Jimmy's Jeep Adventures — יבשה וים",
+  tags:["ג׳יפ 4×4","+ שייט","1,800 ביקורות"],
+  stars:"4.9 / 5 · 1,802 ביקורות",
+  price:"כ־€75–95 לאדם · 8:30 עד 17:00–19:00 · צהריים לא כלול",
+  addr:"פאפוס · איסוף מהמלון (מחוץ לפאפוס — צריך לתאם)",
+  hotel:[0,0], peyia:[0,0], pickup:true,
+  desc:"המסלול הפופולרי ביותר באזור, ובצדק: חצי יום ג׳יפ בשטח דרך קוראל ביי, מערות הים, מטעי בננות, ערוץ אווקאס וחוף לארה, ואז שייט של שלוש שעות ללגונה הכחולה עם שחייה ושנרקול. שילוב של שתי הקטגוריות שדירגתם ראשונות, ביום אחד. ג׳ימי לא ממהר — הוא מחזיר בין חמש לשבע, כמו שיוצא.",
+  reviews:"מעל 1,800 ביקורות ודירוג יוצא דופן. השמות שחוזרים לטובה הם המדריכים אריק ולואיס. סיפורים על צבים בלארה, האכלת חמורים, וידע מקומי אמיתי על האזור. אין כמעט ביקורות שליליות, מה שנדיר.",
+  note:"דורש הודעה של 72 שעות מראש — המקומות מוגבלים. האיסוף כלול בפאפוס; מהמלון שלכם ייתכן שיבקשו שתיפגשו בנקודה מוסכמת או יגבו תוספת. תתקשרו ותסגרו את זה מראש.",
+  site:"https://jimmysjeepadventures.com/frequently-asked-questions/",
+  siteLabel:"אתר רשמי",
+  tel:"+35799556257",
+  mapq:"Jimmys Jeep Adventures Paphos Cyprus"
+},
+{
+  name:"TT Motorcycle Rentals — באגי וטרקטורון לחוף לארה",
+  tags:["באגי","טרקטורון","חצי יום"],
+  stars:"מפעיל מבוסס · פאפוס",
+  price:"‎€235 לנהג בודד · €250 לשניים על אותו רכב",
+  addr:"TT Motorcycle Rentals & Tours, פאפוס",
+  hotel:[22,28], peyia:[15,21],
+  desc:"מסלול חצי יום שיוצא מפאפוס, עובר את הטיילת החופית של 15 הקילומטרים לקוראל ביי, עוצר במערות הים ובספינה הטרופה אדרו 3, ואז נכנס לחצי האי אקאמאס עד חוף לארה. המחיר גבוה יותר מהמקומיים בקוראל ביי כי הוא כולל את כל הקטע של האספלט.",
+  reviews:"מפעיל מסודר עם ציוד תקין. החיסרון המרכזי: המסלול יוצא רק בימי שלישי בשעה 11:00, מה שאומר שאם אתם לא כאן בשלישי — זה לא רלוונטי. בתאריכים שלכם (רביעי–שבת) כנראה שלא.",
+  note:"בתאריכים 26–29.8 (רביעי עד שבת) המסלול הזה כנראה לא יוצא. שווה טלפון לבדוק אם פתחו תאריך נוסף בעומס האוגוסט.",
+  site:"https://paphosmotorcyclerentals.com.cy/product/buggy-quad-tour-paphos/",
+  siteLabel:"אתר רשמי"
+},
+{
+  name:"מסלול העפר לחוף לארה — בעצמכם, בחינם",
+  tags:["חינם","עשה זאת בעצמך","זהירות"],
+  stars:"החוף הכי יפה באזור",
+  price:"חינם · רק דלק",
+  addr:"כניסה לאקאמאס מ־Agios Georgiou Peyias · כ־7 ק״מ עפר עד לארה",
+  hotel:[12,35], peyia:[14,38],
+  desc:"מהמלון שלכם, הכניסה לאקאמאס היא ממש מעבר לפינה. משם זה בערך שבעה קילומטרים של דרך עפר לא סלולה עד חוף לארה — חוף ארוך של חול זהוב־חום בין שני ראשי סלע, בלי שום פיתוח, אחד מאתרי הקינון החשובים בים התיכון לצבי ים חדים־ראש וצבים ירוקים.",
+  reviews:"הדעות חלוקות בדיוק בנקודה אחת: אפשר או אי אפשר ברכב רגיל. מקורות מקומיים אומרים שהדרך בדרך כלל במצב סביר ואפשר לעבור גם ברכב סלון אם נוסעים לאט. מבקרים אחרים כותבים בפירוש 'אל תיקחו את רכב ההשכרה' וממלצים על 4×4 או אופנוע שטח. מבקרת מפברואר 2026 כתבה בדיוק את זה.",
+  note:"<strong>זה החלק שחייבים לקרוא:</strong> כמעט כל חוזה השכרת רכב בקפריסין מבטל את הביטוח ברגע שאתם יורדים מהאספלט. אם תיתקעו או תפגעו בגחון — זה עליכם, וזה יכול להיות אלפי אירו. אל תסתמכו על ווייז או גוגל שמראים שאפשר לעבור. אם אתם רוצים את לארה — תעשו את זה בבאגי מושכר או בסיור מודרך.",
+  note2:"בחוף עצמו: הכניסה לחוף ולתחנת שימור הצבים ברגל בלבד, אסור להביא שמשיות או מיטות שיזוף, ובאוגוסט זו עונת הקינון — יש קינים מסומנים ואסור להתקרב. אין צל ואין קיוסק. תביאו מים וקרם.",
+  mapq:"Lara Beach Akamas Cyprus",
+  site:"https://cyprustravelhub.com/lara-beach-cyprus/",
+  siteLabel:"מדריך לחוף לארה",
+},
+{
+  name:"ערוץ אווקאס (Avakas Gorge)",
+  tags:["חינם","הליכה","נוף"],
+  stars:"4.5 / 5 · אחד האתרים המסומנים באקאמאס",
+  price:"חינם",
+  addr:"אקאמאס, ליד Agios Georgios · חניה בתחילת השביל",
+  hotel:[6,15], peyia:[9,18],
+  desc:"קניון סיד צר ודרמטי שהקירות שלו מתקרבים עד כמה מטרים זה מזה, עם צמחייה נדירה, לטאות וציפורים. הליכה קלה עד בינונית בתוך הערוץ. משתלב מושלם ביום השטח כי הוא נמצא בדיוק על הציר בין מערות הים לחוף לארה.",
+  reviews:"נחשב אחד הדברים היפים באזור. הביקורות מזכירות שצריך נעליים סגורות והליכה בתוך מים בחלק מהעונות, ושבשעות הצהריים באוגוסט חם מאוד בתוך הערוץ — כדאי בבוקר.",
+  note:"היו עבודות והסדרות דרכים באקאמאס בשנים האחרונות, כולל דיווחים על גשר סגור באזור הערוץ. תבדקו מצב עדכני מול המדריך או במלון לפני שאתם נוסעים.",
+  mapq:"Avakas Gorge Cyprus",
+  site:"https://cyprus-mail.com/2026/07/18/akamas-national-park-a-visitors-guide",
+  siteLabel:"מדריך אקאמאס מעודכן",
+},
+{
+  name:"ספארי ג׳יפים להרי טרודוס",
+  tags:["ג׳יפ 4×4","יום שלם","יין"],
+  stars:"9.8 / 10 · יוצא מן הכלל",
+  price:"כ־€69–81 לאדם · 8–9 שעות · טעימות יין כלולות",
+  addr:"איסוף מהמלון · יעד: הרי טרודוס",
+  hotel:[90,105], peyia:[85,100],
+  desc:"אם אתם רוצים יום שטח שהוא לא אקאמאס: 4×4 להרי טרודוס דרך כפרים מסורתיים שהתיירות לא הגיעה אליהם, הגשר הוונציאני צֶ׳לֶפוֹס, מפל חנטרה, מנזר קיקוס, וכפר אומודוס. חוזרים דרך סלע אפרודיטה לשחייה. כולל טעימות יין ולוקום.",
+  reviews:"דירוג 9.8 מתוך 10 למפעיל Telis Wild and Free — מהגבוהים שראינו. המבקרים מדגישים אווירה משפחתית וחמימה ומסלול שבורח מההמונים.",
+  note:"זה יום שלם (8:30 עד 16:00 בערך) והוא אוכל לכם יום מתוך שלושה. עם דירוג של אקאמאס במקום הראשון — כנראה שלא שווה את זה בטיול כל כך קצר. שמור לפעם הבאה.",
+  site:"https://www.viator.com/Paphos-tours/4WD-ATV-and-Off-Road-Tours/d5629-g9-c32",
+  siteLabel:"השוואה והזמנה"
+}
+],
+
+/* ==================== ים ואקסטרים ==================== */
+sea:[
+{
+  name:"Blue Diamond Latchi — סירה בהגה שלכם, בלי רישיון",
+  tags:["הבחירה מספר 1","סירה","לגונה כחולה"],
+  stars:"4.9 / 5 · ביקורות מעולות",
+  price:"מכ־€190–220 לסירה (עד 6–8 אנשים) · דלק בנפרד, כ־€35 לשלוש שעות · רב־חובל אופציונלי €20 לשעה",
+  addr:"Blue Diamond Latchi, נמל לאצ׳י, Polis Chrysochous 8820 — מול המשטרה הימית, ליד החניון הראשי",
+  hotel:[35,42], peyia:[30,36],
+  desc:"מכל מה שמצאנו, זה הדבר שנועד בשבילכם. סירת מנוע חדשה, אתם נוהגים, בלי רישיון שיט — רישיון נהיגה רגיל וגיל 18 מספיקים לפי החוק בקפריסין. מקבלים תדריך נהיגה מלא, מקרר קטן, מסכות שנרקול, רמקול בלוטות׳ וכריות שיזוף, ויוצאים לחוף האקאמאס והלגונה הכחולה בקצב שלכם. עוצרים במפרצים שאין אליהם דרך יבשתית. שוכרים ל־2 עד 6 שעות.",
+  reviews:"הביקורות מפורטות ומאוד חמות. קבוצה ששכרה לשלוש שעות בלי רב־חובל כתבה שהצוות ענה על כל שאלה בוואטסאפ לפני הנסיעה, שהסבירו בדיוק איך מגיעים ללגונה בבטחה ואיפה כדאי לעצור בדרך, ושחשבון הדלק יצא €35 — הוגן לגמרי. האזהרה החוזרת היחידה: להשליך ולהעלות עוגן בלגונה זו עבודה מיוזעת.",
+  note:"מודל התשלום: מקבלים מכל דלק מלא ומשלמים בסוף רק על מה שצרכתם, עם בדיקה בהתחלה ובסוף. אם אף אחד מכם לא מרגיש בנוח על ההגה — תוסיפו רב־חובל ב־€20 לשעה, זה זול והוא גם ייקח אתכם למקומות הנכונים.",
+  site:"https://www.bluediamondlatchi.com/boat-hire/",
+  siteLabel:"אתר רשמי והזמנה"
+},
+{
+  name:"שייט 3 שעות ללגונה הכחולה מלאצ׳י",
+  tags:["שייט","זול","שחייה"],
+  stars:"4.9 / 5 · פופולרי מאוד",
+  price:"כ־€25–35 לאדם · יוצא כל יום",
+  addr:"נמל לאצ׳י, Polis Chrysochous 8840",
+  hotel:[35,42], peyia:[30,36],
+  desc:"הגרסה הזולה והפשוטה: עולים על סירה מאורגנת, שלוש שעות לאורך חוף אקאמאס, עוצרים ללגונה הכחולה לשחייה ושנרקול, מקבלים כוס יין או מיץ ופירות העונה בדרך חזרה. אם התקציב לחוץ או שאתם לא רוצים להתעסק בנהיגה — זו הדרך.",
+  reviews:"האנשים מרוצים מהמים ומהעצירות. התלונה החוזרת בסיורים המאורגנים בכלל: זמן השחייה בלגונה מרגיש קצר ויש הרבה סירות באותו מפרץ באוגוסט. אם אתם רוצים את הלגונה לעצמכם — עדיף הסירה הפרטית מלמעלה, או לצאת מוקדם.",
+  site:"https://www.bluediamondlatchi.com/boat-hire/",
+  siteLabel:"פרטים והזמנה"
+},
+{
+  name:"Coral Bay Watersports (PAPA Seasports)",
+  tags:["ג׳ט סקי","פליי בורד","הכי קרוב"],
+  stars:"עסק משפחתי · מחירים טובים",
+  price:"הערכה: ג׳ט סקי €50–70 ל־15 דק׳ · פראסיילינג €45–60 · בננה €15–20 · פליי בורד €80–110",
+  addr:"חוף קוראל ביי, פיאה",
+  hotel:[7,11], peyia:[2,4],
+  desc:"התחנה הקרובה למלון ובה כל מה שצריך: פראסיילינג, ג׳ט סקי לאחד או שניים, סירות מתנפחות מסוג Crazy Shark, בננה, Fly Fish במהירות גבוהה, פליי בורד שנגרר אחרי ג׳ט סקי לאקסטרים אמיתי, סקי מים, קאנו וקטמרן. הם גם מוציאים שייט למערות הים ולמפרץ הצבים וטיולי דיג בים הפתוח.",
+  reviews:"עסק משפחתי עם מוניטין של יחס אישי ומחירים הוגנים יחסית לאזור. זה לא מתקן ענק ומהוקצע אלא דוכן חוף — וזה בדיוק מה שאתם צריכים.",
+  note:"את המחירים ברשימה כאן לא הצלחנו לאמת מול מחירון רשמי — הם טווח מקובל באזור. תשאלו על מחיר לארבעה יחד, בקוראל ביי כמעט תמיד יש הנחת קבוצה.",
+  site:"https://www.facebook.com/coralbaywatersports/",
+  siteLabel:"עמוד רשמי ומחירים",
+  mapq:"Coral Bay Watersports PAPA Seasports Peyia Cyprus"
+},
+{
+  name:"Pafos Watersports — מאז 1979",
+  tags:["ג׳ט סקי","סיבוב","פראסיילינג"],
+  stars:"מבוסס מאוד · ותיק באזור",
+  price:"מחירון 2026 מתעדכן באתר · הערכה: ג׳ט סקי €50–70, סיבוב €90–130, פראסיילינג €45–60",
+  addr:"הטיילת החופית ליד מלונות Almyra ו־Annabelle, קאטו פאפוס",
+  hotel:[21,28], peyia:[15,21],
+  desc:"התחנה הוותיקה והמסודרת ביותר באזור, פועלת מ־1979. יש להם מגוון שרחב יותר מקוראל ביי: פראסיילינג, ג׳ט סקי, סיבוב (Seabob — טורפדו חשמלי שגורר אותך מתחת למים), פליי בורד, סקי מים, בננה, סאפ וקטמרן. גם השכרת סירות. הצוות מקבל מחמאות חוזרות, במיוחד בעל המקום פאנוס.",
+  reviews:"מבקרים מציינים ציוד חדש ואיכותי וצוות שיודע להרגיע גם מי שמפחד. הביקורות על הג׳ט סקי במיוחד טובות. מיקום על הטיילת בקאטו פאפוס — נוח לשלב עם ערב בעיר.",
+  note:"המחירון שלהם באתר מפורסם כתמונה שמתעדכנת לעונה, אז שווה טלפון קצר לפני. פתוח כל יום 9:30–18:00.",
+  site:"https://pafoswatersports.com/price-list/",
+  siteLabel:"מחירון רשמי",
+  tel:"+35799739344"
+},
+{
+  name:"Latchi Dive & Watersports — צלילת ניסיון",
+  tags:["צלילה","מתחילים","הזול ביותר"],
+  stars:"מומלץ · 17 חבילות שונות",
+  price:"צלילת ניסיון מ־€95 · קורס PADI Scuba Diver (5 צלילות) €395",
+  addr:"נמל לאצ׳י, Polis Chrysochous",
+  hotel:[35,42], peyia:[30,36],
+  desc:"האופציה הזולה לצלילה ראשונה, ומרכז הצלילה היחיד בצפון־מערב קפריסין עם הסמכת PADI חמישה כוכבים. צלילת ניסיון אחת בלי שום הסמכה, עם מדריך, כולל כל הציוד. יש להם שלוש סירות צלילה, בריכת אימונים ומדריכים בבית — ומרכזי צלילה אחרים נוסעים לכאן לצלול, כי אקאמאס על מפתן הדלת שלהם. אם מישהו מכם צולל מוסמך: הם מוציאים יום צלילה ל<b>זנוביה</b> — אונייה שוודית באורך 172 מטר שנחשבת מעשרת צלילות ההרס הטובות בעולם. זו עצירה בלרנקה, כלומר אפשר לשלב אותה ביום שאתם עוברים לימסול.",
+  reviews:"14 ביקורות עם דירוג טוב ומילה שחוזרת: ארגון. מבקרת מגרמניה כתבה שהכול היה מושלם. ביטול חופשי בכל החבילות שלהם.",
+  note:"אם אחד מכם צולל מוסמך — תגידו להם, יש להם צלילות מודרכות באתרים טובים יותר במקום מסלול המתחילים. ואם אף אחד לא שחיין בטוח, זו לא הפעילות להתחיל ממנה.",
+  site:"https://www.latchidivecentre.com/",
+  siteLabel:"אתר רשמי והזמנה"
+},
+{
+  name:"Cydive Paphos — מרכז הצלילה הוותיק בקפריסין",
+  tags:["צלילה","PADI 5 כוכבים"],
+  stars:"מדורג מספר 1 בפאפוס · PADI IDC 5★",
+  price:"‎Discover Scuba (צלילה ראשונה) €185 · קורס Open Water מלא €525",
+  addr:"קאטו פאפוס · בריכת אימונים במקום",
+  hotel:[21,28], peyia:[15,21],
+  desc:"מרכז הצלילה הראשון בקפריסין שקיבל הסמכת PADI חמישה כוכבים, ומדורג ראשון בפאפוס. יש להם בריכה משלהם באתר, כלומר לומדים את היסודות במים רגועים ואז יוצאים לצלילה בים. יקר יותר מלאצ׳י — ומקבלים על זה יחס אישי ומדריכים ותיקים.",
+  reviews:"אחת הביקורות המפורטות ביותר שקראנו על מקום באזור: הצלילה נעשית באזור קיסונרגה בערך 20 דקות מהמרכז, המדריכים מיק, פסקל ואסיה מקבלים שמות ומחמאות אישיות, והאיזון בין כיף לבטיחות מצוין. אפשר לקנות תמונות ווידאו בסוף — קצת יקר אבל שווה למזכרת.",
+  note:"‎€185 לצלילה ראשונה זה גבוה. אם המטרה היא רק לנסות — לאצ׳י ב־€95 עושה את העבודה. אם מישהו מכם רוצה להתחיל קורס באמת — זה המקום.",
+  site:"https://www.cydive.com/",
+  siteLabel:"אתר רשמי"
+},
+{
+  name:"פארק המים אפרודיטה",
+  tags:["מגלשות","יום שלם","מיזוג"],
+  stars:"4.0 / 5 · הפארק הגדול באזור",
+  price:"‎€36 בקופה · כ־€32 בהזמנה מוקדמת באתר (10% הנחה) · כרטיס דו־יומי €53",
+  addr:"Poseidonos Avenue, קאטו פאפוס 8133",
+  hotel:[22,30], peyia:[16,22],
+  desc:"פארק המים הגדול באזור פאפוס. מגלשות מהירות, נהר עצל ארוך, בריכת גלים, ג׳קוזי, ומגלשת Free Fall שמפילה אותך 15 מטר על יריעת מים אנכית. אוגוסט: 10:00 עד 18:00 כל יום.",
+  reviews:"הדעות מעורבות והכי כדאי לדעת אותן מראש: יש מי שכותב שזה 'לא ממש מקום לבוגרים' ושהוא יקר. מצד שני, כמעט כולם מסכימים שאין תורים ארוכים כמו בפארקים באירופה. יש צמיד אלקטרוני שסופר הוצאות ומשלמים בסוף — תשימו לב לזה.",
+  note:"עם דירוג של שטח וים מעל הכול, זה כנראה לא ההימור הטוב ביותר ליום שלם בטיול של שלושה ימים. אבל אם יום אחד יוצא חם מדי או שהים גלי — זו תוכנית גיבוי טובה.",
+  site:"https://aphroditewaterpark.com/en",
+  siteLabel:"אתר רשמי · הזמנה בהנחה"
+},
+{
+  name:"מערות הים והספינה הטרופה אדרו 3",
+  tags:["חינם","נוף","5 דקות מהמלון"],
+  stars:"האתר המצולם ביותר באזור",
+  price:"חינם",
+  addr:"Agiou Georgiou Road, פיאה — אזור מערות הים",
+  hotel:[3,5], peyia:[6,10],
+  desc:"מכלית מטען באורך 83 מטר, שנבנתה ב־1966 ונתקעה בסלעים ב־8 בדצמבר 2011 בדרך מלימסול לרודוס, בסערה. היא עומדת שם עד היום מול המצוקים, קרובה מאוד לחוף, וחלודה לגמרי. סביבה מערות ים חצובות בגלים, קמרונות סלע טבעיים ומפרצונים במים צלולים. חמש דקות נסיעה מהמלון — זה המקום לשקיעה של היום הראשון, בלי תכנון ובלי כסף.",
+  reviews:"אחד האתרים המצולמים ביותר בקפריסין. מבקרים כותבים שהאור הטוב הוא לפני השקיעה, ושכדאי נעליים סגורות — הסלע חד.",
+  note:"<strong>קפיצות לים באזור מערות הים:</strong> אנשים קופצים שם, אבל אין מציל, אין סימון עומק, הסלע חד והזרם משתנה. אם אתם רוצים לקפוץ — תעשו את זה מסירה או עם מדריך שמכיר את המקום, לא ממצוק שראיתם ברילס. באוגוסט הים בדרך כלל שקט, אבל זה לא מבטיח כלום.",
+  mapq:"Edro III Shipwreck Sea Caves Peyia Cyprus",
+  site:"https://thisispeyia.com/activities-and-experiences-in-peyia/",
+  siteLabel:"מדריך מקומי לפיאה",
+},
+{
+  name:"הלגונה הכחולה ומפרץ מנוליה",
+  tags:["שנרקול","מים צלולים","הגעה בסירה"],
+  stars:"הכי מדובר באקאמאס",
+  price:"חינם · אבל צריך סירה או 4×4",
+  addr:"קצה חצי האי אקאמאס · הגעה מלאצ׳י בסירה או בדרך עפר",
+  hotel:[40,55], peyia:[35,50],
+  desc:"המים הצלולים והכי טורקיז באזור, אידיאליים לשחייה ולשנרקול. סביבה יש מפרצונים במרחק הליכה — מנוליה ביי ואחרים. הדרך היבשתית קשה, ולכן הרוב מגיעים בסירה מלאצ׳י — וזה גם עדיף, כי מסירה אפשר לעצור במפרצים שאין אליהם דרך בכלל.",
+  reviews:"מבקר שעשה את זה בבאגי כתב שזה חמש שעות הלוך־חזור עם עצירות שחייה, שיש קטע אחד מסובך אבל אפשרי גם למתחילים, ושהשבילים הפנימיים בקצה חצי האי קשים משמעותית יותר. מבקרים אחרים כותבים שהליכה לשם היא שעה וחצי בשמש מלאה — לא מומלץ.",
+  note:"באוגוסט יש שם הרבה סירות בצהריים. תצאו מוקדם או אחרי 15:00.",
+  mapq:"Blue Lagoon Akamas Cyprus",
+  site:"https://cyprus-mail.com/2026/07/18/akamas-national-park-a-visitors-guide",
+  siteLabel:"מדריך אקאמאס מעודכן",
+},
+{
+  name:"חוף קוראל ביי",
+  tags:["דגל כחול","מציל","חינם"],
+  stars:"4.4 / 5 · מהחופים הפופולריים בקפריסין",
+  price:"חינם · מיטת שיזוף ושמשייה כ־€2.50–5 ליחידה",
+  addr:"Coral Bay Avenue, פיאה 8575",
+  hotel:[7,11], peyia:[2,4],
+  desc:"חוף חול לבן־רך באורך 600 מטר בצורת סהר, בין שני ראשי סלע. דגל כחול, מצילים בעונת השחייה, מים נקיים, המון מיטות שיזוף ושמשיות, ותחנת ספורט ימי על החוף. בחודשי הקיץ יש שם גם מסיבות חוף. הרצועה עם הברים והמסעדות במרחק הליכה קצרה.",
+  reviews:"כמעט כולם מסכימים שהחוף עצמו יפה ונקי. הביקורת החוזרת: באוגוסט זה עמוס מאוד ומקבל אופי משפחתי־תיירותי. אם אתם רוצים שקט — קורליה או לאורו לידו.",
+  mapq:"Coral Bay Beach Peyia Cyprus"
+},
+{
+  name:"חופים שקטים: קורליה, לאורו ו־White River",
+  tags:["חינם","שקט","מקומי"],
+  stars:"אלטרנטיבה לעומס",
+  price:"חינם",
+  addr:"Corallia Beach ו־Laourou Beach, פיאה · White River בקצה אקאמאס",
+  hotel:[6,9], peyia:[3,6],
+  desc:"קורליה ולאורו הם מפרצים קטנים בפיאה, דקות מקוראל ביי, בלי ההמון. על קורליה יש בר־מסעדה עם אוכל פשוט ואיכותי (מגישים אוכל עד 18:00 בלבד). White River הוא מפרץ בקצה אקאמאס, בדיוק לפני ערוץ אווקאס — יורדים אליו בשביל צר מהמצוק או בדרך עפר.",
+  note:"ל־White River הייתה היסטוריה מסובכת של קרקע פרטית ושערים נעולים, והיו עבודות דרכים באזור. תבדקו לפני שאתם נוסעים במיוחד.",
+  mapq:"Corallia Beach Peyia Cyprus"
+}
+],
+
+/* ==================== אוכל ==================== */
+food:[
+{
+  name:"Peyia Tavern — הטברנה של הכפר, מ־1983",
+  tags:["טברנה","מזה בשרי","הכי אותנטי"],
+  stars:"4.6 / 5 · מוסד מקומי",
+  price:"מזה בשרי כ־€20–28 לאדם · יין הבית זול ובסדר גמור",
+  addr:"מרכז הכפר פיאה",
+  hotel:[8,12], peyia:[0.3,1],
+  desc:"טברנה משפחתית שפועלת מ־1983 והכוכב שלה הוא 'מזה בשר מיוחד' — סדרת מנות בשר שמגיעות אחת אחרי השנייה, מוגשות על ידי בני המשפחה עצמם. לפני הבשר מגיעים לחם, סלט, ממרחים ופורגורי (הבורגול המקומי). חלומי, שפתלייה (נקניקיות עשבי תיבול קפריסאיות) וסטיפאדו. אין תפריט קבוע במובן הרגיל — מציעים לכם את מה שבושל היום, או מזה.",
+  reviews:"מבקרים חוזרים שם 13 שנה ברצף וכותבים שלא מצאו טברנה טובה יותר בקפריסין. מה שחוזר: השפתלייה כאן לא יבשה כמו במקומות אחרים, המנות נדיבות, והמקום מלא מקומיים — מה שאומר הרבה. יש גם ביקורות ביקורתיות: אחד כתב שהמזה לא היה אותנטי לגמרי (לחם רגיל במקום פיתה) ושאכל טוב יותר במקומות אחרים באותו מחיר. מבקר אחר הופתע לטובה שזה יצא זול יותר מטברנות אחרות באזור.",
+  note:"<strong>המקום קטן — חייבים להזמין.</strong> באוגוסט לפעמים כמה ימים מראש. מבקרת אחת כתבה שהיא הצליחה להיכנס בלי הזמנה רק במקרה.",
+  mapq:"Peyia Tavern Peyia Cyprus",
+  site:"https://www.tripadvisor.com/Restaurant_Review-g776028-d2259961-Reviews-Peyia_Tavern-Peyia_Paphos_District.html",
+  siteLabel:"תפריט וביקורות",
+},
+{
+  name:"Andria Steak & Seafood — האסטייק הטוב באזור",
+  tags:["סטייקים","דגים","ערב מפנק"],
+  stars:"מדורג מהטובים בקפריסין",
+  price:"‎€35–60 לאדם · לא זול, ומשקף",
+  addr:"הרחוב הראשי של קוראל ביי, פיאה",
+  hotel:[7,11], peyia:[2,4],
+  desc:"פועל מ־1991 על מה שהיה פעם כרם של המשפחה, ועובר מסבים לנכדים. סטייקים ופירות ים, רשימת יינות ארוכה, ואווירה שהיא מסעדה — לא טברנה. אם אתם עושים ערב אחד גדול מתוך השלושה, זה המקום שהביקורות מצביעות עליו.",
+  reviews:"הביקורות חזקות בצורה חריגה. מבקר שמגיע לקפריסין מ־2008 כתב שזו מסעדת הסטייקים והדגים הטובה שאכל בה בכל מסעותיו, ובוודאות הטובה בקפריסין: הסטייקים רכים, מלאי טעם ומדויקים. אחר כתב פשוט 'המסעדה הטובה בפאפוס'. הביקורת הביקורתית היחידה שחוזרת: זה לא זול, ואם לא באתם לחגוג משהו — יש אופציות טובות בחצי מחיר.",
+  note:"הזמינו מקום, במיוחד לשישי או שבת בערב באוגוסט.",
+  site:"https://andriacoralbay.com/",
+  siteLabel:"אתר רשמי",
+  mapq:"Andria Steak and Seafood Coral Bay Cyprus"
+},
+{
+  name:"Oniro by the Sea — על המצוק, ליד הספינה",
+  tags:["נוף","שקיעה","קוקטיילים"],
+  stars:"4.5 / 5 · הנוף הכי מדובר באזור",
+  price:"‎€30–50 לאדם לארוחה · קוקטייל €10–14",
+  addr:"אזור מערות הים, פיאה — מעל המצוק מול הספינה אדרו 3",
+  hotel:[4,7], peyia:[7,11],
+  desc:"בר־מסעדה על המצוק, עם נוף ישיר למערות הים ולספינה הטרופה. תפריט ים־תיכוני מודרני עם דגש על דגים טריים — תמנון על הגריל, לברק, לובסטר, שרימפס. הכי קרוב למלון מכל מקום בקטגוריה הזו, וזה המקום המובן מאליו לשקיעה של הערב הראשון.",
+  reviews:"הביקורות מתייחסות אליו כמקום 'עם נוף שאין כמותו' והוא עמוס למרות שהוא לא על ציר תיירותי. מוגדר מקום משפחתי ורומנטי יותר מסוער — כלומר בואו לשקיעה ולקוקטייל, לא בשביל מסיבה.",
+  note:"עונתי. תתקשרו לפני — פעם אחת בעבר הופיע כסגור באתרים מקומיים. סגור בימי שני לפי מקור אחד.",
+  tel:"+35726000119",
+  site:"https://oniro.cy/",
+  siteLabel:"אתר רשמי · הזמנת שולחן",
+  mapq:"Oniro by the Sea Peyia Cyprus"
+},
+{
+  name:"Porto Antico — דגים מול המפרץ",
+  tags:["דגים","נוף","קורליה"],
+  stars:"4.4 / 5 · מומלץ בפיאה",
+  price:"‎€25–40 לאדם",
+  addr:"ליד חוף קורליה, פיאה, קוראל ביי",
+  hotel:[6,10], peyia:[3,6],
+  desc:"ההמלצה המקומית כשרוצים דגים באזור פיאה. ממוקם ליד חוף קורליה עם נוף למפרץ, מטבח ים־תיכוני. יותר שקט מהרצועה של קוראל ביי.",
+  reviews:"מבקרים מציינים שהשירות טוב והאוכל טרי ואיכותי. מופיע חוזר ונשנה ברשימות 'הטוב בפיאה' לדגים, לצד Andria לבשר. עסק משפחתי עם מרפסת חוץ ונוף שקיעה.",
+  note:"<strong>סגור בימי חמישי.</strong> שאר הימים 12:00–23:00. חמישי הוא יום השטח שלכם, אז זה לא מפריע — אבל אל תגיעו לכאן בטעות אחרי הבאגי.",
+  mapq:"Porto Antico Restaurant Coral Bay Cyprus",
+  site:"https://thisispeyia.com/restaurants/porto-antico/",
+  siteLabel:"שעות, תפריט וביקורות",
+},
+{
+  name:"The Old Cinema — טברנה בלב הכפר",
+  tags:["טברנה","גריל","מקומי"],
+  stars:"מומלץ מקומית",
+  price:"‎€18–28 לאדם",
+  addr:"מרכז הכפר פיאה",
+  hotel:[8,12], peyia:[0.3,1],
+  desc:"אחת משתי הטברנות שהמדריכים המקומיים מצביעים עליהן בלב הכפר, לצד Peyia Tavern. אווירה חמה, מנות גדולות של בשר על הגריל, ממרחים תוצרת בית ומנות קפריסאיות קלאסיות. לשתות עם זה יין מקומי, בירה קרה, או שוט של אוזו או זיוואניה.",
+  reviews:"דירוג 4.5 מתוך 5 עם 543 ביקורות, מקום 11 מתוך 75 המסעדות בפיאה. המבקרים כותבים 'הטברנה הטובה בפיאה', מנות ענקיות ותמורה טובה לכסף. הבניין הוא בית קולנוע משוחזר וזה מרגיש. עצה שחוזרת: להחנות בחניון הכפר ולעלות ברגל, החניה ברחובות הצדדיים קשה.",
+  note:"פותח ב־17:00 כל יום, עד 23:00. מקום קטן ומשפחתי — כדאי להזמין.",
+  mapq:"The Old Cinema Restaurant Peyia Cyprus",
+  site:"https://thisispeyia.com/restaurants/the-old-cinema/",
+  siteLabel:"שעות, תפריט וביקורות",
+},
+{
+  name:"Savvas Grill — הגריל השכונתי",
+  tags:["טברנה","גריל","זול"],
+  stars:"מומלץ · פיאה",
+  price:"‎€15–25 לאדם",
+  addr:"שדרות אקאמנטוס 32 (Akamantos Ave), פיאה 8560",
+  hotel:[8,12], peyia:[0.5,2],
+  desc:"גריל מקומי בפיאה, מהסוג שאין בו שום העמדת פנים: בשר, סלט, פיתה, בירה. אם אתם חוזרים מאובקים מיום שטח ורוצים לאכול הרבה בזול בלי להתלבש — זה הכתובת.",
+  reviews:"עסק משפחתי של סאבאס ואלנה שפועל מ־2007, עם כ־650 ביקורות. המבקרים מדגישים קלפטיקו ומוסקה ברמה גבוהה, חלומי מצוין ואווירה של בית. יש גם ביקורות ביקורתיות שחוזרות על אותה נקודה: בעומס חסר צוות והשירות נהיה איטי מאוד. מגיעים מוקדם.",
+  note:"<strong>סגור בימי שני, ופותח רק ב־17:00.</strong> אין צהריים. יש גם ערבי ריקודים קפריסאיים פעמיים בשבוע — שווה לשאול מתי.",
+  mapq:"Savvas Grill Peyia Cyprus",
+  site:"https://savvasgrill.com/",
+  siteLabel:"אתר רשמי",
+},
+{
+  name:"Spilies Tavern Bar",
+  tags:["טברנה","בר","פיאה"],
+  stars:"מומלץ · פיאה",
+  price:"‎€18–28 לאדם",
+  addr:"פיאה",
+  hotel:[8,12], peyia:[0.5,2],
+  desc:"טברנה־בר בפיאה: מטבח קפריסאי מסורתי בשילוב מקום לשבת ולשתות. מתאים לערב שמתחיל באוכל וממשיך לבירות בלי לעבור מקום.",
+  reviews:"מופיע ברשימות המקומיות של המסעדות המומלצות בפיאה. שילוב טברנה ובר תחת קורת גג אחת הוא נוח לחבורה.",
+  mapq:"Spilies Tavern Bar Peyia Cyprus"
+},
+{
+  name:"Ocean Basket — דגים בזול, בקוראל ביי",
+  tags:["דגים","זול","קרוב"],
+  stars:"4.2 / 5 · רשת דרום־אפריקאית",
+  price:"‎€15–25 לאדם · מגשי שיתוף משתלמים לארבעה",
+  addr:"Coral Bay Avenue, פיאה",
+  hotel:[7,11], peyia:[2,4],
+  desc:"רשת שהתחילה כעסק משפחתי בפרטוריה שבדרום אפריקה וגדלה ל־200 סניפים ב־16 מדינות. מנות ים גדולות במחיר סביר, פיש אנד צ׳יפס טוב, וסושי. יש סניף גם בקאטו פאפוס וגם בקוראל ביי. לא חוויה קולינרית — אבל כשארבעה אנשים רעבים רוצים מגש דגים גדול בפחות מ־€25 לראש, זה עובד.",
+  reviews:"הביקורות טובות ועקביות: הדגים טריים, המנות גדולות, השירות נמרץ. הביקורת החוזרת: האטמוספירה היא של רשת ולא של מקום מקומי.",
+  mapq:"Ocean Basket Coral Bay Paphos Cyprus",
+  site:"https://cyprus.oceanbasket.com/our-restaurants/ocean-basket-paphos-coral-bay/",
+  siteLabel:"אתר רשמי ותפריט",
+},
+{
+  name:"Santa Marina — פיש אנד צ׳יפס ליד החוף",
+  tags:["זול","מהיר","טבעוני"],
+  stars:"4.4 / 5 · פופולרי",
+  price:"‎€12–20 לאדם",
+  addr:"ליד חוף קוראל ביי, פיאה",
+  hotel:[7,11], peyia:[2,4],
+  desc:"מקום פשוט וטוב ליד החוף: פיש אנד צ׳יפס, מנות ים ומנות אירופאיות, ויש גם המבורגר Beyond טבעוני. מתאים לצהריים אחרי החוף בלי לשבת שעתיים.",
+  reviews:"המבקרים מציינים דג טרי, צ׳יפס פריך ושירות מהיר. מחירים טובים ויחס נעים חוזרים בביקורות.",
+  mapq:"Santa Marina Fish and Chips Coral Bay Cyprus"
+},
+{
+  name:"Samisen — סושי בקוראל ביי",
+  tags:["סושי","קרוב"],
+  stars:"מוזכר לטובה בביקורות",
+  price:"‎€25–40 לאדם",
+  addr:"רצועת קוראל ביי, פיאה",
+  hotel:[7,11], peyia:[2,4],
+  desc:"אם באמצע הטיול נמאס לכם מבשר על הגריל ומדגים בגריל — יש סושי ברצועה של קוראל ביי, מרחק דקות מהמלון.",
+  reviews:"מבקרים כתבו שהצוות נעים מאוד והסושי מדהים. אחד המקומות הבודדים באזור שיוצא מהתפריט הקפריסאי־בריטי הרגיל.",
+  mapq:"Samisen Coral Bay Cyprus"
+},
+{
+  name:"Phill's Bar & Grill",
+  tags:["המבורגרים","ספורט","בירה"],
+  stars:"מקום נינוח · פיאה",
+  price:"‎€15–25 לאדם",
+  addr:"פיאה, אזור קוראל ביי",
+  hotel:[7,11], peyia:[2,4],
+  desc:"בר ספורט עם אוכל: המבורגרים עסיסיים, סטייקים, פיצות. המקום שבו אפשר לשבת ארבעה, להזמין בירות, לאכול משהו גדול ולראות משחק על מסך. לא יומרני ולא מתיימר להיות.",
+  reviews:"מוגדר בהמלצות המקומיות כמקום נינוח שיש בו משהו לכולם, עם אווירה חברית.",
+  mapq:"Phills Bar and Grill Peyia Cyprus"
+},
+{
+  name:"Ta Mpania — יום בים, לילה במסיבה",
+  tags:["חוף","לאונג׳","עד 3 בבוקר"],
+  stars:"אהוב על צעירים",
+  price:"‎€20–35 לאדם · קוקטיילים €9–13",
+  addr:"קו החוף בקאטו פאפוס",
+  hotel:[21,28], peyia:[15,21],
+  desc:"מסעדה, קפה ולאונג׳־בר תחת קורת גג אחת, במקום מעולה על קו החוף בקאטו פאפוס. ביום זה מקום של שוחים מקומיים, ובלילה זה מתמלא בצעירים שנשארים לשתות ולדבר עד שלוש לפנות בוקר. פתרון מושלם ליום שמתגלגל לערב בלי לחזור למלון להתחלף.",
+  reviews:"מתואר במפורש כמקום שמשך קהל מסיבות צעיר בלילה, בשונה מהברים המשפחתיים באזור. אם אתם מחפשים את הקהל בגילכם בפאפוס — זו אחת הכתובות.",
+  mapq:"Ta Mpania Kato Paphos Cyprus"
+},
+{
+  name:"The Lodge — הערב היוקרתי",
+  tags:["פיין דיינינג","סטייקים","יקר"],
+  stars:"מסעדת שף מדורגת",
+  price:"‎€50–80 לאדם",
+  addr:"פאפוס",
+  hotel:[22,30], peyia:[16,22],
+  desc:"מסעדה דרום־אפריקאית בפאפוס שנחשבת מהחוויות הקולינריות הגבוהות באזור: סטייקים ופירות ים ברמה גבוהה, בסביבה יפה. אם אתם רוצים ערב אחד שהוא ממש 'ארוחה' ולא 'לאכול' — זו האופציה היקרה, ו־Andria בקוראל ביי היא האופציה החכמה יותר (וקרובה יותר).",
+  reviews:"מתואר כמסעדה מהטובות בפאפוס לסטייקים ולדגים, עם ההערה החוזרת שהיא לא ידידותית לתקציב.",
+  mapq:"The Lodge Restaurant Paphos Cyprus"
+}
+],
+
+/* ==================== לילה ==================== */
+night:[
+{
+  name:"Decades Nightclub — קוראל ביי",
+  tags:["מועדון","בלי כניסה","הכי קרוב"],
+  stars:"קהל מקומי ותיירים",
+  price:"אין דמי כניסה · בירה €4–6 · קוקטייל €8–12",
+  addr:"רצועת קוראל ביי, פיאה",
+  hotel:[7,12], peyia:[2,5],
+  desc:"המועדון על הרצועה של קוראל ביי, וגם המועדון הקרוב ביותר למלון שלכם. אין דמי כניסה בכלל, מה שהופך אותו לבחירה הראשונה של הקהל המקומי ולא רק של התיירים. די־ג׳יים ולהקות. אם אתם רוצים ערב אחד בלי לשלם על מונית לפאפוס — זה כאן.",
+  reviews:"מוזכר כמקום 'חם' לקהל מקומי, וההיעדר של דמי כניסה חוזר כסיבה המרכזית לפופולריות. האווירה מתוארת כג׳אזי ולא כמועדון טכנו — תתאימו ציפיות.",
+  mapq:"Decades Nightclub Coral Bay Peyia Cyprus"
+},
+{
+  name:"Kleo's Cocktail Bar & Night Club",
+  tags:["קוקטיילים","מועדון","קרוב"],
+  stars:"מדורג טוב · קוראל ביי",
+  price:"קוקטייל €8–12",
+  addr:"קוראל ביי, פיאה",
+  hotel:[7,12], peyia:[2,5],
+  desc:"בר קוקטיילים שהופך למועדון בהמשך הערב, על הרצועה. הקוקטיילים מקבלים ציונים גבוהים והמוזיקה עולה עם השעה. ההתחלה הטבעית של לילה בקוראל ביי לפני שעוברים ל־Decades.",
+  reviews:"מופיע ראשון ברשימות הברים של קוראל ביי, עם הדגש על קוקטיילים חריגים לטובה ומוזיקה תוססת.",
+  mapq:"Kleos Cocktail Bar Coral Bay Cyprus"
+},
+{
+  name:"Yialos Beach Grill House — די־ג׳יי על החוף",
+  tags:["חוף","די־ג׳יי בסופ״ש","שקיעה"],
+  stars:"מומלץ לשקיעה",
+  price:"בירה €4–6 · אוכל €15–25",
+  addr:"רצועת קוראל ביי, על החוף",
+  hotel:[7,11], peyia:[2,4],
+  desc:"בר על החוף עם נוף שקיעה ודי־ג׳יים בסופי שבוע. אתם בקפריסין ברביעי עד שבת — כלומר שישי ושבת בערב זה בדיוק כאן. הדבר הקרוב ביותר למסיבת חוף באזור פיאה.",
+  reviews:"מופיע כהמלצה מקומית לשילוב של אוכל, שקיעה ומוזיקה. הרצועה של קוראל ביי מקבלת ביקורת חוזרת שהיא קצרה ומוגבלת — אבל בסופ״ש עם די־ג׳יי זה עובד.",
+  note:"תבדקו מול המקום מי מנגן ובאיזו שעה. בקפריסין יש תקנות רעש שמחייבות להנמיך אחרי חצות — הברים פתוחים אחרי, אבל שקטים יותר.",
+  mapq:"Yialos Beach Grill House Coral Bay Cyprus"
+},
+{
+  name:"Blazing Saddles Bar",
+  tags:["קריוקי","זול","הכי מלא"],
+  stars:"אחד הברים הכי עמוסים ברצועה",
+  price:"בירה €3.50–5",
+  addr:"רצועת קוראל ביי, פיאה",
+  hotel:[7,12], peyia:[2,5],
+  desc:"בר קריוקי גדול על הרצועה, מרכז החיים של הקהל הבריטי המקומי. תמיד מלא, תמיד רועש, ובירה זולה. אם אתם ארבעה שרוצים לצחוק ולשיר גרוע — זה המקום.",
+  reviews:"מבקרים שחזרו משמונה לילות בקוראל ביי ציינו אותו בשם כאחד הברים עם החיים האמיתיים ברצועה. עם זאת אותם מבקרים הוסיפו שאם רוצים באמת עמוס — כדאי מונית לפאפוס.",
+  mapq:"Blazing Saddles Bar Coral Bay Cyprus"
+},
+{
+  name:"The Veteran's Bar — פיאה",
+  tags:["מוזיקה חיה","קריוקי","זול"],
+  stars:"מחירים נוחים",
+  price:"בירה €3–5 · אוכל פאב €8–14",
+  addr:"פיאה",
+  hotel:[8,12], peyia:[0.5,2],
+  desc:"בר בכפר פיאה עצמו עם מוזיקה חיה, קריוקי ואוכל פאב במחירים נוחים. הקהל מקומי יותר מהרצועה של קוראל ביי, וזה בדיוק היתרון.",
+  reviews:"מוגדר ברשימות המקומיות כמקום עם אווירה תוססת ומחירים נוחים.",
+  mapq:"The Veterans Bar Peyia Cyprus"
+},
+{
+  name:"Chalkies Bar — גריל וקוקטיילים",
+  tags:["גריל","קוקטיילים"],
+  stars:"מומלץ · קוראל ביי",
+  price:"‎€15–25 לאדם · קוקטיילים €8–11",
+  addr:"Coral Bay Avenue 19-22, פיאה 8575",
+  hotel:[7,11], peyia:[2,4],
+  desc:"שילוב של גריל וקוקטיילים באווירה תוססת על הרצועה. מתאים כתחנה ראשונה של הערב — אוכלים משהו על האש ומתחילים לשתות במקום אחד.",
+  reviews:"מופיע גם ברשימות הברים וגם ברשימות המסעדות של קוראל ביי, מה שאומר שהוא באמת עושה את שני הדברים.",
+  mapq:"Chalkies Bar Coral Bay Cyprus"
+},
+{
+  name:"Flairs Cocktail Bar — רחוב הברים בפאפוס",
+  tags:["רחוב הברים","קוקטיילים","1+1"],
+  stars:"הכי חי ברחוב הברים",
+  price:"קוקטיילים בדרך כלל 1+1 · €8–12 למשקה",
+  addr:"רחוב Ayiou Antoniou (רחוב הברים), קאטו פאפוס",
+  hotel:[21,30], peyia:[15,22],
+  desc:"בר הריקודים הידוע ביותר ברחוב הברים של פאפוס, ולפי מדריכים מקומיים — הסיבה האמיתית היחידה להגיע לרחוב הזה היום. יש להם דיל קבוע של קנה אחד קבל אחד על קוקטיילים.",
+  reviews:"מדריך מקומי כתב עליו שהוא 'שורד' בסצנה שראתה ימים טובים יותר, ושהוא מחזיק את הלהבה. זו מחמאה — ובו זמנית אזהרה על הרחוב עצמו.",
+  note:"<strong>שווה לדעת:</strong> רחוב הברים של פאפוס הוא לא מה שהיה בשנות ה־80 וה־90. חלק מהמקומות נסגרו, חלק פתוחים רק בעונה, וחלק פותחים מאוחר מאוד. אל תגיעו ב־22:00 ותצפו לראות משהו. תגיעו ב־23:30–24:00, ותשימו את הציפיות במקום הנכון.",
+  mapq:"Flairs Bar Agiou Antoniou Paphos Cyprus"
+},
+{
+  name:"Loft Club — המועדון של פאפוס",
+  tags:["מועדון","כניסה €25","2 משקאות"],
+  stars:"נחשב המועדון הטוב בפאפוס",
+  price:"כניסה €25 לאדם, כולל שני משקאות",
+  addr:"אזור רחוב הברים, קאטו פאפוס",
+  hotel:[21,30], peyia:[15,22],
+  desc:"מוגדר במדריכים המקומיים כמועדון הטוב בפאפוס. הכניסה €25 וכוללת שני משקאות — כלומר בפועל זה כמו לשלם על שני קוקטיילים ולקבל מועדון חינם. מועדוני האזור עמוסים מ־23:00 והלאה וסוגרים ב־4:00 ואף מאוחר יותר בערבי שיא.",
+  reviews:"מקבל את התואר 'המועדון הטוב בפאפוס' במדריכים. שווה לזכור שהרף בפאפוס נמוך מאיה נאפה — זה מועדון תיירותי טוב, לא סצנה בינלאומית.",
+  note:"אתם כאן בשישי ובשבת בערב — הלילות החזקים ביותר בשבוע. אם אתם עושים לילה אחד גדול, תעשו אותו בשישי או בשבת.",
+  mapq:"Loft Club Paphos Cyprus",
+  site:"https://www.leonardo-hotels-cyprus.com/paphos/nightlife/loft-club",
+  siteLabel:"פרטים ושעות",
+},
+{
+  name:"Rainbow Club",
+  tags:["מועדון","כניסה €10"],
+  stars:"ביקורות מעורבות",
+  price:"כניסה €10, כולל משקה",
+  addr:"רחוב הברים, קאטו פאפוס",
+  hotel:[21,30], peyia:[15,22],
+  desc:"מועדון תיירותי קלאסי ברחוב הברים, עם רצפת ריקודים ומוזיקה מיינסטרים. כניסה €10 שכוללת משקה — הזול מבין המועדונים.",
+  reviews:"המדריכים המקומיים מציינים במפורש שהביקורות עליו מעורבות. מצד שני, ב־€10 עם משקה — ההפסד קטן.",
+  mapq:"Rainbow Club Paphos Cyprus"
+},
+{
+  name:"Robin Hood Pub",
+  tags:["פאב","ביליארד","דארטס"],
+  stars:"פופולרי מאוד בקרב תיירים",
+  price:"בירה €4–6 · קוקטיילים €8–11",
+  addr:"מרכז רחוב הברים, קאטו פאפוס",
+  hotel:[21,30], peyia:[15,22],
+  desc:"פאב במרכז רחוב הברים שנראה מבחוץ כמו טירה מהמאה ה־12. יש שולחנות ביליארד ולוחות דארטס, קוקטיילים טובים, ומוזיקה שמתחלפת בסגנון כל לילה. מקום נוח להתחיל ממנו לילה בפאפוס לפני שעוברים למועדון.",
+  reviews:"מוזכר עשורים בכל מדריך לפאפוס כאחד הפאבים הפופולריים ביותר, עם אווירה נוחה. יש עליו גם ביקורות שאומרות שהוא תיירותי מאוד — נכון, וזה בסדר.",
+  mapq:"Robin Hood Pub Paphos Cyprus"
+},
+{
+  name:"Boogies Karaoke & Disco Club",
+  tags:["קריוקי","מועדון","18+"],
+  stars:"מומלץ למי שאוהב קריוקי",
+  price:"בדרך כלל בלי דמי כניסה או סמלי",
+  addr:"רחוב הברים, קאטו פאפוס",
+  hotel:[21,30], peyia:[15,22],
+  desc:"מועדון קריוקי ודיסקו לגילאי 18 ומעלה ברחוב הברים. בדיוק מה שנשמע.",
+  reviews:"מבקרת כתבה שהדי־ג׳יי היה חמוד ועזר לה למצוא את השיר שרצתה, ושהאווירה טובה. מקום שנעים לחזור אליו.",
+  mapq:"Boogies Karaoke Club Paphos Cyprus"
+},
+{
+  name:"Muse Cafe Kitchen Bar — נוף ומסיבה",
+  tags:["נוף","שקיעה","מסיבות"],
+  stars:"מקום מבוקש בעיר העתיקה",
+  price:"קוקטיילים €9–13 · אוכל €20–35",
+  addr:"אזור מוסאלאס, פאפוס העתיקה",
+  hotel:[22,30], peyia:[16,22],
+  desc:"בר־מסעדה באזור מוסאלאס בפאפוס העתיקה, עם נוף, קוקטיילים מוקפדים ומסיבות. פתוח עד כמה שעות אחרי חצות, ומתמלא סביב השקיעה. התאורה בחוץ בערב היא חצי מהעניין. אלטרנטיבה טובה לרחוב הברים אם רוצים משהו פחות תיירותי.",
+  reviews:"מתואר כיעד לאוכל עם נוף, משקאות מפונפנים ומסיבות. ההמלצה החוזרת: להגיע סביב השקיעה, אז הוא מתמלא.",
+  mapq:"Muse Cafe Kitchen Bar Paphos Cyprus"
+},
+{
+  name:"La Boite 67 — מוזיקה חיה מאז 1967",
+  tags:["מוזיקה חיה","ותיק","אמנים"],
+  stars:"מוסד היסטורי בפאפוס",
+  price:"‎€20–35 לאדם",
+  addr:"פאפוס",
+  hotel:[22,30], peyia:[16,22],
+  desc:"אחת ממסעדות־המועדונים הוותיקות בפאפוס — נקראת כך כי היא נוסדה ב־1967. מקום מפגש של אמנים, עם אירועי מוזיקה חיה מכל הסוגים. אם אתם רוצים לילה אחד שהוא לא מועדון תיירותי אלא משהו עם אופי, זה כאן.",
+  reviews:"מתואר כמקום עם 'חן שלא מזדקן' ויעד ליושבי הלילה. מוזיקה חיה מכל הסגנונות, כלומר תבדקו מה מנגן באותו ערב.",
+  mapq:"La Boite 67 Paphos Cyprus"
+},
+{
+  name:"המועדון והאמפיתיאטרון של המלון",
+  tags:["במלון","בלי מונית","0 דקות"],
+  stars:"בתוך Cap St Georges",
+  price:"מחירי מלון · בירה €7–9, קוקטייל €13–18",
+  addr:"Cap St Georges Hotel & Resort, 3 Maniki Street, Peyia",
+  hotel:[0,0], peyia:[8,12],
+  desc:"שווה לדעת שבמלון עצמו יש מועדון לילה, אמפיתיאטרון, כיכר Agora עם מסעדות וג׳לטריה, וכ־10 מסעדות וברים. המחירים גבוהים כמו בכל מלון חמישה כוכבים — אבל בלילה שבו אף אחד לא רוצה לנהוג או לשלם €35 על מונית, זה נמצא במרחק הליכה מהחדר.",
+  reviews:"הביקורות על המלון מדגישות שהמקום מבודד ושצריך רכב כדי לצאת — מה שהופך את הברים במקום לרלוונטיים יותר משנשמע. מבקרים גם מציינים שהמחירים שם גבוהים ביחס לשירות.",
+  note:"תשאלו ברצפשן באיזה לילות המועדון פועל בפועל — במלונות בקפריסין זה משתנה לפי תפוסה.",
+  site:"https://www.capstgeorges.com",
+  siteLabel:"אתר המלון",
+  tel:"+35726000000"
+}
+]
+};
+
+/* ============================================================
+   מסך הבית
+   ============================================================ */
+const HOME_HTML = `
+<div class="screen__intro">
+  <h2>שני ימים מלאים בפיאה. זה מה שיש.</h2>
+  <p>אחרי שעדכנתם את הטיסות, התמונה האמיתית היא: <strong>רביעי הוא יום נסיעה בלבד</strong> (נחיתה בלרנקה ב־20:00, כשעתיים דרך למלון), <strong>חמישי ושישי הם שני הימים המלאים</strong>, ובשבת יש לכם בוקר עד צ׳ק־אאוט ב־12:00 ואז נסיעה ללימסול. כלומר: <strong>יום שטח אחד, יום ים אחד</strong>. אין מרווח לטעויות ואין זמן לפארק המים או לטרודוס.</p>
+</div>
+
+<div class="count">שלוש נקודות שקובעות את הטיול</div>
+
+<div class="card is-open">
+  <div class="card__head"><div class="card__top"><div class="card__name">לרנקה ← המלון זה כשעתיים, לא חצי שעה</div></div></div>
+  <div class="card__body">
+    <p>לרנקה לפאפוס זה כ־1:30–1:45 בכביש מהיר, והמלון שלכם עוד כ־25–30 דקות <b>אחרי</b> פאפוס. סך הכול <b>≈150 ק״מ, כשעתיים עד 2:15</b>. עם נחיתה ב־20:00 ודלפק השכרה באוגוסט, אתם על הכביש ב־20:45–21:00 ובמלון סביב <b>23:00</b>.</p>
+    <div class="note note--warn"><strong>הטעות הנפוצה בצומת הראשון:</strong> מיד כשיוצאים משדה התעופה אתם על כביש מהיר, והוא מתפצל — <b>איה נאפה</b> לכאן, <b>לימסול (Lemesos)</b> לכאן. אתם רוצים <b>לימסול</b>, ואז A1 ל־A6 לכיוון פאפוס (Pafos). מי שמפספס את זה נוסע חצי שעה בכיוון ההפוך. הכביש מואר טוב וריק בלילה.</div>
+    <div class="note"><strong>שני דברים לעשות עוד היום:</strong> להזמין את הרכב אונליין מראש כדי לא לעמוד בתור בדלפק, ולהודיע ל־Cap St Georges שאתם מגיעים ב־23:00 — מלונות משחררים חדרים למי שלא מודיע.</div>
+    <div class="note"><strong>אוכל בהגעה:</strong> ב־23:00 פיאה וקוראל ביי סגורות. תאכלו בשדה בלרנקה, או תעצרו בתחנת דרך על ה־A1, או תסתמכו על רום סרוויס במלון. אל תגיעו רעבים ומאוכזבים.</div>
+  </div>
+</div>
+
+<div class="card is-open">
+  <div class="card__head"><div class="card__top"><div class="card__name">רק שני לילות בפאפוס — ושישי הוא הגדול</div></div></div>
+  <div class="card__body">
+    <p>רביעי אתם נכנסים ב־23:00 מרוסקים מהנסיעה. שבת בערב אתם כבר במסיבה שלכם בלימסול. כלומר הלילות שנשארו הם <b>חמישי ושישי</b> — ואחרי יום שטח שלם בחמישי אף אחד לא יהיה במצב לנסוע לפאפוס.</p>
+    <p><b>ההיגיון:</b> חמישי בערב מקומי ובהליכה או מונית קצרה — רצועת קוראל ביי. שישי בערב הלילה הגדול והיחיד — ארוחה טובה ואז פאפוס.</p>
+  </div>
+</div>
+
+<div class="card is-open">
+  <div class="card__head"><div class="card__top"><div class="card__name">רכב ההשכרה לא נכנס לשטח</div></div></div>
+  <div class="card__body">
+    <p>כמעט כל חוזה השכרה בקפריסין מבטל את הביטוח ברגע שיורדים מהאספלט, והדרכים לחוף לארה ולערוץ אווקאס הן עפר. ווייז יראה לכם שאפשר לעבור — <b>אל תסמכו עליו</b>. יום השטח שלכם צריך להיות על באגי מושכר או בסיור מודרך, ועם יום אחד בלבד אין לכם מרווח להתקע.</p>
+    <div class="note note--warn"><strong>אם בכל זאת שכרתם 4×4:</strong> תגידו לנו ונחזיר רשימה אחרת — יש מסלולים שאפשר לעשות לבד ולחסוך מאות אירו.</div>
+  </div>
+</div>
+
+<div class="count">התוכנית לפי הטיסות שלכם</div>
+
+<div class="day">
+  <span class="day__tag">רביעי · 26.8 · יום נסיעה</span>
+  <h3>לרנקה ← פיאה</h3>
+  <p class="day__note">אל תתכננו כלום ליום הזה חוץ מלהגיע בשלום.</p>
+  <div class="slot"><div class="slot__time">20:00</div><div class="slot__what">נחיתה בלרנקה. איסוף הרכב — <b>תזמינו מראש אונליין</b></div></div>
+  <div class="slot"><div class="slot__time">20:45</div><div class="slot__what">יוצאים לדרך. בצומת הראשון — <b>לימסול (Lemesos)</b>, לא איה נאפה</div></div>
+  <div class="slot"><div class="slot__time">21:45</div><div class="slot__what">עצירה בתחנת דרך לקפה, שירותים ואוכל. נוהגים בצד שמאל — תנו לנהג המנוסה את ההגה</div></div>
+  <div class="slot"><div class="slot__time">‎≈23:00</div><div class="slot__what">צ׳ק־אין ב־<b>Cap St Georges</b>. בירה על המרפסת, לישון. מחר יום ארוך</div></div>
+</div>
+
+<div class="day">
+  <span class="day__tag">חמישי · 27.8 · יום השטח</span>
+  <h3>אקאמאס — העדיפות מספר 1</h3>
+  <p class="day__note">היום היחיד שלכם בשטח. סוגרים אותו לפני כל דבר אחר.</p>
+  <div class="slot"><div class="slot__time">08:30</div><div class="slot__what"><b>ספארי באגי או טרקטורון</b> — Golden Ride או Chris Andreou, שניהם בקוראל ביי, 10 דקות מהמלון</div></div>
+  <div class="slot"><div class="slot__time">בדרך</div><div class="slot__what">מערות הים, הספינה אדרו 3, ערוץ אווקאס, <b>חוף לארה</b>, מפלי אדוניס — לפי המסלול</div></div>
+  <div class="slot"><div class="slot__time">‎≈14:00</div><div class="slot__what">חוזרים מאובקים. מקלחת, בריכה, שינה קצרה</div></div>
+  <div class="slot"><div class="slot__time">20:00</div><div class="slot__what"><b>Peyia Tavern</b> למזה בשרי בכפר, או <b>Savvas Grill</b> אם רוצים הרבה וזול</div></div>
+  <div class="slot"><div class="slot__time">22:30</div><div class="slot__what">רצועת קוראל ביי — <b>Kleo's</b>, <b>Blazing Saddles</b>, ואז <b>Decades</b> בלי דמי כניסה. מונית קצרה, לא נהיגה</div></div>
+</div>
+
+<div class="day">
+  <span class="day__tag">שישי · 28.8 · יום הים והלילה הגדול</span>
+  <h3>הלגונה הכחולה, ואז הערב הטוב</h3>
+  <p class="day__note">היום המלא האחרון. שישי בערב הוא הלילה החזק בשבוע.</p>
+  <div class="slot"><div class="slot__time">09:00</div><div class="slot__what">נסיעה ללאצ׳י — כ־40–45 דקות דרך פיאה וקאתיקאס</div></div>
+  <div class="slot"><div class="slot__time">10:00</div><div class="slot__what"><b>סירה בהגה שלכם</b> — Blue Diamond. 4 שעות ללגונה הכחולה, בלי רישיון שיט</div></div>
+  <div class="slot"><div class="slot__time">15:30</div><div class="slot__what">חוזרים. אופציה בדרך: <b>ג׳ט סקי או פליי בורד</b> בקוראל ביי</div></div>
+  <div class="slot"><div class="slot__time">20:30</div><div class="slot__what"><b>Andria Steak & Seafood</b> בקוראל ביי — הערב הגדול. <b>הזמינו מקום</b></div></div>
+  <div class="slot"><div class="slot__time">23:30</div><div class="slot__what">מונית לפאפוס: <b>Flairs</b> ואז <b>Loft Club</b>. חזרה ‎≈€30–40 בלילה. לא נוהגים</div></div>
+</div>
+
+<div class="day">
+  <span class="day__tag">שבת · 29.8 · מעבר ללימסול</span>
+  <h3>בוקר קצר, ואז 1:20 נסיעה</h3>
+  <p class="day__note">צ׳ק־אאוט 12:00 · המסיבה שלכם ב־16:00 · צ׳ק־אין ב־NYX מ־15:00</p>
+  <div class="slot"><div class="slot__time">08:30</div><div class="slot__what">ארוחת בוקר וחוף המלון. תארזו לפני שיורדים</div></div>
+  <div class="slot"><div class="slot__time">10:00</div><div class="slot__what"><b>מערות הים והספינה אדרו 3</b> — 5 דקות מהמלון, חינם, והדבר האחרון שתראו בפיאה</div></div>
+  <div class="slot"><div class="slot__time">12:00</div><div class="slot__what">צ׳ק־אאוט. לא לשכוח מטענים וציוד ים</div></div>
+  <div class="slot"><div class="slot__time">12:30</div><div class="slot__what">נסיעה ללימסול — <b>≈120 ק״מ, 1:15–1:30</b> ב־A6. יש תחנות דרך</div></div>
+  <div class="slot"><div class="slot__time">‎≈14:00</div><div class="slot__what">מגיעים ל־<b>NYX</b>. אם החדר לא מוכן — משאירים תיקים בקבלה ומתלבשים במלון</div></div>
+  <div class="slot"><div class="slot__time">16:00</div><div class="slot__what">המסיבה שלכם. בהצלחה 🍻</div></div>
+</div>
+
+<div class="day">
+  <span class="day__tag">ראשון · 30.8 · יום הקניות</span>
+  <h3>לשרוף זמן וכסף, ואז לשדה</h3>
+  <p class="day__note">המסיבה נגמרת ב־04:00 · צ׳ק־אאוט 12:00 · טיסה 23:00 מלרנקה</p>
+  <div class="slot"><div class="slot__time">11:30</div><div class="slot__what">צ׳ק־אאוט לפני 12:00 — <b>תבקשו צ׳ק־אאוט מאוחר בקבלה מבעוד מועד</b>. התיקים נשארים ברכב</div></div>
+  <div class="slot"><div class="slot__time">12:30</div><div class="slot__what">בראנץ׳ ברחוב אנקסרטיסיאס — אתם ישנים <b>עליו</b>, המלון בפינה שלו</div></div>
+  <div class="slot"><div class="slot__time">13:30</div><div class="slot__what"><b>קניות.</b> אנקסרטיסיאס מתחת למלון, או 12 דקות נסיעה ל־<b>MyMall</b> — הגדול, וסוגר ב־19:30</div></div>
+  <div class="slot"><div class="slot__time">19:30</div><div class="slot__what">החנויות נסגרות. ארוחה בלימסול או בדרך</div></div>
+  <div class="slot"><div class="slot__time">20:15</div><div class="slot__what">יוצאים לשדה לרנקה — <b>≈54 ק״מ, 45–50 דק׳</b>. להחזיר רכב ולתמלא דלק</div></div>
+  <div class="slot"><div class="slot__time">21:15</div><div class="slot__what">בשדה. טיסה ב־23:00 — נחתם בזמן, בלי לחץ</div></div>
+</div>
+
+<div class="note" style="margin-bottom:6px"><strong>המרווח היחיד שלוחץ:</strong> החנויות בלימסול נסגרות ב־19:30 והטיסה ב־23:00. זה עובד מצוין — אבל אם תרצו לאכול ארוחה מסודרת לפני הטיסה, תסיימו את הקניות ב־18:30.</div>
+`;
+
+/* ============================================================
+   מסך מידע
+   ============================================================ */
+const INFO_HTML = `
+<div class="screen__intro">
+  <h2>מידע שימושי</h2>
+  <p>נסיעות, מרחקים, נהיגה בקפריסין, מוניות ומחירים — וכל מה שצריך לסגור לפני הטיסה.</p>
+</div>
+
+<div class="count">שלוש הנסיעות הארוכות</div>
+<div class="info">
+  <div class="info__row"><dt>רביעי · שדה לרנקה ← המלון</dt><dd>‎≈150 ק״מ · 2:00–2:15</dd></div>
+  <div class="info__row"><dt>שבת · המלון ← NYX לימסול</dt><dd>‎≈120 ק״מ · 1:15–1:30</dd></div>
+  <div class="info__row"><dt>ראשון · לימסול ← שדה לרנקה</dt><dd>‎≈54 ק״מ · 45–50 דק׳</dd></div>
+</div>
+<div class="note note--warn"><strong>הצומת שמפילים בו:</strong> מיד ביציאה משדה לרנקה אתם על כביש מהיר שמתפצל ל<b>איה נאפה</b> ול<b>לימסול (Lemesos)</b>. קחו <b>לימסול</b>, ואז A1 ל־A6 לכיוון פאפוס (Pafos). הכביש מהיר, ריק ומואר טוב — אבל השילוט ביוונית ובאנגלית וקל לפספס בחשכה.</div>
+<div class="note"><strong>אם מונית עדיפה בסוף:</strong> לפי NYX, מונית משדה לרנקה ללימסול היא ‎≈€70 ביום ו־€75 אחרי חצות ל־4 אנשים. זה מספר טוב להשוואה מול עלות רכב + דלק, אם מישהו מכם לא רוצה לנהוג בכלל.</div>
+
+<div class="count">המלון</div>
+<div class="info">
+  <div class="info__row"><dt>שם</dt><dd>Cap St Georges Hotel & Resort</dd></div>
+  <div class="info__row"><dt>כתובת</dt><dd>3 Maniki Street, Peyia 8570</dd></div>
+  <div class="info__row"><dt>טלפון</dt><dd>+357 26 000 000</dd></div>
+  <div class="info__row"><dt>צ׳ק־אין / אאוט</dt><dd>15:00 / 12:00</dd></div>
+  <div class="info__row"><dt>שדה תעופה פאפוס</dt><dd>‎≈32 ק״מ · 35–40 דק׳</dd></div>
+</div>
+<div class="actions actions--2">
+  <a class="btn btn--nav" href="https://waze.com/ul?q=Cap%20St%20Georges%20Hotel%20Peyia%20Cyprus&navigate=yes" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 3 21l9-4 9 4z"/></svg>ווייז למלון</a>
+  <a class="btn btn--call" href="tel:+35726000000">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 3h3l2 5-2.5 1.5a12 12 0 0 0 6 6L15 13l5 2v3a2 2 0 0 1-2.2 2A17 17 0 0 1 3 5.2A2 2 0 0 1 5 3z"/></svg>חייגו למלון</a>
+</div>
+
+<div class="count">מרחקים מ־Cap St Georges · הערכה</div>
+<div class="info">
+  <div class="info__row"><dt>מערות הים / ספינת אדרו 3</dt><dd>‎≈3 ק״מ · 5 דק׳</dd></div>
+  <div class="info__row"><dt>נמל אגיוס גאורגיוס</dt><dd>‎≈1.5 ק״מ · 3 דק׳</dd></div>
+  <div class="info__row"><dt>כניסה לאקאמאס</dt><dd>‎≈2 ק״מ · 4 דק׳</dd></div>
+  <div class="info__row"><dt>חוף קורליה</dt><dd>‎≈6 ק״מ · 9 דק׳</dd></div>
+  <div class="info__row"><dt>ערוץ אווקאס</dt><dd>‎≈6 ק״מ · 15 דק׳</dd></div>
+  <div class="info__row"><dt>קוראל ביי (רצועה וחוף)</dt><dd>‎≈7 ק״מ · 10–12 דק׳</dd></div>
+  <div class="info__row"><dt>כפר פיאה</dt><dd>‎≈8 ק״מ · 12 דק׳</dd></div>
+  <div class="info__row"><dt>חוף לארה (7 ק״מ עפר)</dt><dd>‎≈12 ק״מ · 35–45 דק׳</dd></div>
+  <div class="info__row"><dt>מפלי אדוניס</dt><dd>‎≈15 ק״מ · 25 דק׳</dd></div>
+  <div class="info__row"><dt>נמל פאפוס / קאטו פאפוס</dt><dd>‎≈20 ק״מ · 25–30 דק׳</dd></div>
+  <div class="info__row"><dt>פארק המים אפרודיטה</dt><dd>‎≈22 ק״מ · 30 דק׳</dd></div>
+  <div class="info__row"><dt>נמל לאצ׳י</dt><dd>‎≈35 ק״מ · 40–45 דק׳</dd></div>
+  <div class="info__row"><dt>הרי טרודוס</dt><dd>‎≈90 ק״מ · 1:45</dd></div>
+</div>
+<div class="note">כל המרחקים הם <strong>הערכה</strong> שחושבה לפי כתובת המלון בפיאה. ווייז יגיד לכם את המצב האמיתי, במיוחד בשעות העומס באוגוסט.</div>
+
+<div class="count">נהיגה בקפריסין — קראו את זה</div>
+<div class="card is-open">
+  <div class="card__head"><div class="card__top"><div class="card__name">נוסעים בצד השמאלי</div></div></div>
+  <div class="card__body">
+    <p>קפריסין נוסעת <b>בצד השמאלי של הכביש</b>, וההגה בצד ימין. הדבר המסוכן הוא לא הנהיגה עצמה אלא הכיכרות והפניות בשעות הראשונות. תנו לנהג הכי מנוסה לקחת את היום הראשון.</p>
+    <p><b>מהירויות:</b> 100 קמ״ש בכביש מהיר, 65 בבין־עירוני, 50 בעיר. יש מצלמות.</p>
+    <div class="note note--warn"><strong>אלכוהול:</strong> מגבלת הנשיפה בקפריסין נמוכה, האכיפה אמיתית וקנסות כבדים. לילה שיש בו שתייה — לא נוהגים בו. מוניות עולות פחות מנקודות רישיון ומהצרות שיבואו אחריהן.</div>
+  </div>
+</div>
+
+<div class="count">מוניות ותחבורה</div>
+<div class="info">
+  <div class="info__row"><dt>שדה התעופה ← אזור קוראל ביי</dt><dd>‎≈€24 ביום · €29 בלילה</dd></div>
+  <div class="info__row"><dt>נמל פאפוס ← קוראל ביי</dt><dd>‎≈€20–30 · יותר אחרי חצות</dd></div>
+  <div class="info__row"><dt>המלון ← קאטו פאפוס בלילה</dt><dd>‎≈€30–40 (הערכה — רחוק יותר מקוראל ביי)</dd></div>
+  <div class="info__row"><dt>אוטובוס 615 קוראל ביי ↔ פאפוס</dt><dd>‎≈€1.50 · כרטיס לילה ≈€2.50</dd></div>
+  <div class="info__row"><dt>שדה התעופה ← איה נאפה</dt><dd>‎≈€127 ביום · €149 בלילה</dd></div>
+</div>
+<div class="note"><strong>טיפ מקומי:</strong> נהגי מונית בפאפוס לא תמיד מפעילים מונה. תסכימו על מחיר לפני שנכנסים, או תזמינו מראש דרך חברה — יוצא זול יותר. מונית רגילה לוקחת עד 4 נוסעים, כלומר אתם בדיוק מונית אחת.</div>
+<div class="actions actions--2">
+  <a class="btn btn--go" href="https://www.coralbaytaxis.com/" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 3h7v7"/><path d="M21 3 10 14"/><path d="M19 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg>Coral Bay Taxis</a>
+  <a class="btn btn--flat" href="https://www.taxipaphos.com/taxi-price/fares-paphos-area" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 3h7v7"/><path d="M21 3 10 14"/><path d="M19 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg>מחירון מוניות</a>
+</div>
+
+<div class="count">מה לסגור עכשיו</div>
+<div id="tasklist"></div>
+
+<div class="count">מזג אוויר ומה לקחת</div>
+<div class="info">
+  <div class="info__row"><dt>טמפרטורה ביום</dt><dd>‎≈33–35°</dd></div>
+  <div class="info__row"><dt>בלילה</dt><dd>‎≈23–25°</dd></div>
+  <div class="info__row"><dt>ים</dt><dd>‎≈27–28°</dd></div>
+  <div class="info__row"><dt>גשם</dt><dd>אין</dd></div>
+</div>
+<div class="card is-open">
+  <div class="card__head"><div class="card__top"><div class="card__name">רשימת ציוד ליום השטח</div></div></div>
+  <div class="card__body">
+    <p><b>חובה:</b> בנדנה או מסכה לפה (האבק באקאמאס אמיתי), משקפי שמש שנסגרים טוב, נעליים סגורות, קרם הגנה 50, שני ליטר מים לאדם, בגד ים ומגבת, ובגדים להחליף בסוף.</p>
+    <p><b>לקחת מהחדר:</b> רישיון נהיגה פיזי — לא צילום ולא אפליקציה. בלי זה לא נותנים באגי.</p>
+  </div>
+</div>
+
+<div class="count">מספרים לשעת הצורך</div>
+<div class="info">
+  <div class="info__row"><dt>מצוקה — כל השירותים</dt><dd>112</dd></div>
+  <div class="info__row"><dt>משטרה</dt><dd>199</dd></div>
+  <div class="info__row"><dt>מוקד רופא ובית מרקחת תורן</dt><dd>1440</dd></div>
+  <div class="info__row"><dt>מטבע</dt><dd>אירו (€)</dd></div>
+  <div class="info__row"><dt>טיפ מקובל</dt><dd>‎5–10%</dd></div>
+  <div class="info__row"><dt>שקע חשמל</dt><dd>סוג G בריטי — צריך מתאם</dd></div>
+</div>
+<div class="note">בקוראל ביי יש גם בית חב״ד, אם מישהו מכם צריך אוכל כשר או מקום לתפילה. שווה טלפון מראש כי השעות משתנות בעונה.</div>
+`;
+
+/* ============================================================
+   מסך לימסול
+   ============================================================ */
+function malRail(a,aL,b,bL){
+  return `<div class="rail" aria-label="זמן נסיעה">
+    <div class="rail__stop"><span class="rail__pin"></span><span class="rail__min">${a}</span><span class="rail__who">${aL}</span></div>
+    <div class="rail__line"><span class="rail__km">${bL==="לשדה לרנקה"?"בדרך לשדה":"·"}</span></div>
+    <div class="rail__stop rail__stop--b"><span class="rail__pin"></span><span class="rail__min">${b}</span><span class="rail__who">${bL}</span></div>
+  </div>`;
+}
+
+const LIMASSOL_HTML = `
+<div class="screen__intro">
+  <h2>לימסול — קניות ליום ראשון</h2>
+  <p>ביקשתם קניות ולא יותר, אז זה מה שיש כאן. שתי עובדות ששוות זהב: <strong>המלון שלכם יושב על רחוב הקניות המרכזי של לימסול</strong> — אתם יוצאים מהדלת ואתם בתוכו. והדבר היחיד שפתוח בוודאות ביום ראשון הוא <strong>MyMall</strong> וחנויות הרשתות הגדולות. חנויות עצמאיות קטנות סוגרות בראשון.</p>
+</div>
+
+<div class="count">המלון בלימסול</div>
+<div class="info">
+  <div class="info__row"><dt>שם</dt><dd>NYX Hotel Limassol</dd></div>
+  <div class="info__row"><dt>כתובת</dt><dd>פינת Anexartisias ו־C. Hadjipavlou, 3036</dd></div>
+  <div class="info__row"><dt>צ׳ק־אין / אאוט</dt><dd>15:00 / 12:00</dd></div>
+  <div class="info__row"><dt>קבלה</dt><dd>‎24 שעות</dd></div>
+  <div class="info__row"><dt>מרינת לימסול והטירה</dt><dd>פחות מ־10 דק׳ הליכה</dd></div>
+  <div class="info__row"><dt>‎MyMall</dt><dd>‎≈6 ק״מ · 12 דק׳</dd></div>
+  <div class="info__row"><dt>שדה לרנקה</dt><dd>‎≈54 ק״מ · 45–50 דק׳</dd></div>
+</div>
+<div class="note"><strong>הדבר החכם לעשות בשבת בצ׳ק־אין:</strong> לבקש צ׳ק־אאוט מאוחר ליום ראשון. אתם יוצאים למסיבה עד 04:00 וצ׳ק־אאוט ב־12:00 זה אכזרי. אם לא מאשרים — התיקים נכנסים לרכב ואפשר להשאיר אותם בקבלה.</div>
+<div class="actions actions--2">
+  <a class="btn btn--nav" href="https://waze.com/ul?q=NYX%20Hotel%20Limassol%20Anexartisias&navigate=yes" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 3 21l9-4 9 4z"/></svg>ווייז ל־NYX</a>
+  <a class="btn btn--go" href="https://www.leonardo-hotels.com/limassol/nyx-hotel-limassol" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 3h7v7"/><path d="M21 3 10 14"/><path d="M19 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg>אתר המלון</a>
+</div>
+
+<div class="count">4 מקומות לקניות</div>
+
+<article class="card" data-min="0">
+  <button class="card__head" aria-expanded="false">
+    <div class="card__top"><span class="card__name">רחוב אנקסרטיסיאס — מתחת למלון</span><span class="card__chev"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></div>
+    <div class="badges">
+      <span class="badge badge--star">★ רחוב הקניות הראשי של לימסול</span>
+      <span class="badge badge--price">ראשון ‎≈11:00–19:00 (רשתות)</span>
+      <span class="badge badge--tag">0 דק׳ הליכה</span><span class="badge badge--tag">בגדים</span>
+    </div>
+    ${malRail("0 דק׳","הליכה מהמלון","50 דק׳","לשדה לרנקה")}
+  </button>
+  <div class="card__body">
+    <h4>מה זה</h4>
+    <p>הרחוב הראשי של לימסול לבגדים, נעליים ואקססוריז — מעל 300 חנויות, והמלון שלכם נמצא בפינה שלו. כאן יושבות <b>Zara, Mango, Bershka, Guess, Tezenis</b> וחנויות רשת בינלאומיות נוספות, לצד חנויות מקומיות, בתי קפה וסנאק־ברים. זה הרחוב הזול והפרקטי בעיר, בשונה משדרות מקאריוס שהיא היוקרתית.</p>
+    <h4>שעות ביום ראשון</h4>
+    <p>הרשתות הגדולות ברחוב פתוחות בראשון בסביבות <b>11:00–19:00</b>. חנויות עצמאיות קטנות — לא. מקורות שונים חלוקים בנקודה הזאת, אז אם אתם מכוונים לחנות ספציפית שווה בדיקה בגוגל לפני שיוצאים.</p>
+    <h4>כתובת</h4>
+    <p class="addr">Anexartisias Street, לימסול — יוצאים מדלת המלון</p>
+    <div class="note"><strong>למה זו הבחירה הראשונה:</strong> אחרי מסיבה שנגמרת ב־04:00, אף אחד לא רוצה לנהוג. פה אתם יורדים במעלית ומתחילים.</div>
+    <div class="actions actions--2">
+      <a class="btn btn--nav" href="https://waze.com/ul?q=Anexartisias%20Street%20Limassol&navigate=yes" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 3 21l9-4 9 4z"/></svg>ווייז</a>
+      <a class="btn btn--map" href="https://www.google.com/maps/search/?api=1&query=Anexartisias%20Street%20Limassol%20Cyprus" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.4-7-11a7 7 0 0 1 14 0c0 4.6-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>מפות</a>
+    </div>
+  </div>
+</article>
+
+<article class="card" data-min="12">
+  <button class="card__head" aria-expanded="false">
+    <div class="card__top"><span class="card__name">MyMall Limassol — הקניון הגדול</span><span class="card__chev"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></div>
+    <div class="badges">
+      <span class="badge badge--star">★ 4.1 / 5 · ‎140–200 חנויות</span>
+      <span class="badge badge--price">ראשון 11:00–19:30 · פתוח 7 ימים</span>
+      <span class="badge badge--tag">חניה 1,600 מקומות</span><span class="badge badge--tag">באולינג</span>
+    </div>
+    ${malRail("12 דק׳","נסיעה מהמלון","45 דק׳","לשדה לרנקה")}
+  </button>
+  <div class="card__body">
+    <h4>מה זה</h4>
+    <p>הקניון הגדול באזור לימסול, בשכונת זקאקי בכניסה המערבית לעיר — כלומר <b>בכיוון של הכביש המהיר</b>. שלוש קומות, 48,000 מ״ר, מעל 140 חנויות (המקומות מדברים על 200 מותגים), כולל Tommy Hilfiger, Lacoste ורשתות אופנה בינלאומיות. יש גם משטח החלקה על הקרח, מסלול באולינג, ארקייד, קולנוע 6D ומגרש חנייה ענק.</p>
+    <h4>מה אומרים המבקרים</h4>
+    <p class="quote">הדעות חלוקות באופן שכדאי לדעת עליו: חלק כותבים שזה קניון מודרני, נוח, עם מבחר גדול ומחירים סבירים והמון אופציות אוכל. אחרים כותבים שהוא מיושן ורועש ושאין בו משהו מיוחד לקנות. החיסרון שחוזר הכי הרבה: הוא רחוק ממרכז העיר וקשה לתפוס משם מונית. לכם זה לא רלוונטי — יש רכב.</p>
+    <h4>שעות</h4>
+    <p>שני–שבת 10:00–20:00 · <b>ראשון 11:00–19:30</b>. פתוח שבעה ימים בשבוע. מסעדות ובידור נשארים פתוחים עד 22:00.</p>
+    <h4>כתובת</h4>
+    <p class="addr">‎285 Franklin Roosevelt, Zakaki, Limassol 3150 · טל׳ 25 341 777</p>
+    <div class="note"><strong>שווה זהב לראשון שלכם:</strong> יש שם <b>אחסון תיקים בחינם</b> — פונים למחסן האבטחה בקומת המרתף, פועל 08:30 עד 23:00 כל יום. כלומר אפשר לזרוק את התיקים ולהסתובב חופשי אחרי הצ׳ק־אאוט.</div>
+    <div class="actions actions--2">
+      <a class="btn btn--nav" href="https://waze.com/ul?q=MyMall%20Limassol%20Zakaki&navigate=yes" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 3 21l9-4 9 4z"/></svg>ווייז</a>
+      <a class="btn btn--map" href="https://www.google.com/maps/search/?api=1&query=MyMall%20Limassol%20Cyprus" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.4-7-11a7 7 0 0 1 14 0c0 4.6-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>מפות</a>
+    </div>
+    <div class="actions actions--2">
+      <a class="btn btn--go" href="https://www.mymall.com.cy/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 3h7v7"/><path d="M21 3 10 14"/><path d="M19 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg>אתר וחנויות</a>
+      <a class="btn btn--call" href="tel:+35725341777"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 3h3l2 5-2.5 1.5a12 12 0 0 0 6 6L15 13l5 2v3a2 2 0 0 1-2.2 2A17 17 0 0 1 3 5.2A2 2 0 0 1 5 3z"/></svg>חייגו</a>
+    </div>
+  </div>
+</article>
+
+<article class="card" data-min="4">
+  <button class="card__head" aria-expanded="false">
+    <div class="card__top"><span class="card__name">שדרות מקאריוס השלישי — היוקרתי</span><span class="card__chev"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></div>
+    <div class="badges">
+      <span class="badge badge--star">★ מותגי יוקרה ובוטיקים</span>
+      <span class="badge badge--price">יקר · בראשון חלק סגור</span>
+      <span class="badge badge--tag">‎≈1 ק״מ מהמלון</span>
+    </div>
+    ${malRail("4 דק׳","נסיעה מהמלון","50 דק׳","לשדה לרנקה")}
+  </button>
+  <div class="card__body">
+    <h4>מה זה</h4>
+    <p>הרחוב היוקרתי של לימסול: בוטיקים ואולמות תצוגה של מותגים כמו Hugo Boss, Dior, Benetton ו־Karen Millen, ובנוסף חנות הכלבו <b>Debenhams Apollon</b> — כלבו בסטייל בריטי עם בגדים ונעליים למבוגרים וילדים, קוסמטיקה ובישום, שרוב הסחורה בו מיובאת מבריטניה.</p>
+    <h4>מה אומרים</h4>
+    <p class="quote">ההמלצה החוזרת היא לבוא לכאן בעיקר בתקופות מבצעים — מקורות מקומיים מציינים ג׳ינס מעוצב בסביבות €60 ותיקי עור בסביבות €100 בסייל. במחיר מלא זה יקר משמעותית מאנקסרטיסיאס.</p>
+    <h4>כתובת</h4>
+    <p class="addr">‎Makarios III Avenue, לימסול</p>
+    <div class="note note--warn"><strong>אזהרה ליום ראשון:</strong> חלק ניכר מהבוטיקים העצמאיים ברחוב הזה <b>סגור בראשון</b>. אם אתם רוצים ודאות — MyMall או אנקסרטיסיאס. תבואו לכאן רק אם אתם מחפשים מותג מסוים ובדקתם שהוא פתוח.</div>
+    <div class="actions actions--2">
+      <a class="btn btn--nav" href="https://waze.com/ul?q=Makarios%20III%20Avenue%20Limassol&navigate=yes" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 3 21l9-4 9 4z"/></svg>ווייז</a>
+      <a class="btn btn--map" href="https://www.google.com/maps/search/?api=1&query=Makarios%20III%20Avenue%20Limassol%20Cyprus" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.4-7-11a7 7 0 0 1 14 0c0 4.6-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>מפות</a>
+    </div>
+  </div>
+</article>
+
+<article class="card" data-min="2">
+  <button class="card__head" aria-expanded="false">
+    <div class="card__top"><span class="card__name">מרינת לימסול — בוטיקים על המים</span><span class="card__chev"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></div>
+    <div class="badges">
+      <span class="badge badge--star">★ 4.6 / 5 · הכי יפה בעיר</span>
+      <span class="badge badge--price">יקר · קפה €4–6</span>
+      <span class="badge badge--tag">10 דק׳ הליכה</span>
+    </div>
+    ${malRail("10 דק׳","הליכה מהמלון","50 דק׳","לשדה לרנקה")}
+  </button>
+  <div class="card__body">
+    <h4>מה זה</h4>
+    <p>מרינת יאכטות עם רצועת בוטיקים, בתי קפה ומסעדות על המים, פחות מעשר דקות הליכה מהמלון. מבחר החנויות קטן ויקר, אז זה לא המקום למלא מזוודה — אבל זה <b>המקום הטוב בעיר לשבת ולהעביר שעה</b> כשאתם הרוסים מהלילה שלפני ולא מוכנים לקניון. משם ממשיכים בטיילת Molos לאורך הים.</p>
+    <h4>מה אומרים</h4>
+    <p class="quote">מתוארת כאזור חוף מפותח ומרשים עם טיילת רחבה, מזחים מעץ, פארק פסלים ותמרים — מהמקומות היפים בלימסול. הביקורת החוזרת: המחירים במסעדות ובחנויות שם גבוהים ביחס לשאר העיר.</p>
+    <h4>כתובת</h4>
+    <p class="addr">‎Limassol Marina, ליד הטירה והנמל העתיק</p>
+    <div class="actions actions--2">
+      <a class="btn btn--nav" href="https://waze.com/ul?q=Limassol%20Marina&navigate=yes" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 3 21l9-4 9 4z"/></svg>ווייז</a>
+      <a class="btn btn--map" href="https://www.google.com/maps/search/?api=1&query=Limassol%20Marina%20Cyprus" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.4-7-11a7 7 0 0 1 14 0c0 4.6-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>מפות</a>
+    </div>
+  </div>
+</article>
+
+<div class="count">להחזיר מע״מ בשדה</div>
+<div class="card is-open">
+  <div class="card__head"><div class="card__top"><div class="card__name">אתם לא אזרחי האיחוד — יש לכם החזר מע״מ</div></div></div>
+  <div class="card__body">
+    <p>קפריסין באיחוד האירופי, ישראל לא. כלומר על בגדים שאתם קונים ומוציאים מהאיחוד אתם <b>זכאים להחזר מע״מ</b>, והמע״מ בקפריסין הוא 19% — סכום אמיתי אם ארבעה אנשים קונים בגדים כל היום.</p>
+    <p><b>איך:</b> בקופה אומרים <i>Tax Free</i> ומבקשים את הטופס, מציגים דרכון, ושומרים את הקבלה. בשדה בלרנקה מחתימים בעמדת המכס <b>לפני</b> הצ׳ק־אין — כלומר עם הסחורה עוד לא באמתחת. תגיעו מוקדם יותר אם אתם עושים את זה.</p>
+    <div class="note"><strong>מה לבדוק בחנות:</strong> יש סכום מינימום לקבלה כדי להיות זכאי (בסביבות €50, אבל זה משתנה). תשאלו בקופה לפני שאתם מפצלים קניות לכמה קבלות — עדיף קבלה אחת גדולה על ארבע קטנות.</div>
+  </div>
+</div>
+`;
+
+/* ============================================================
+   רשימת מה לסגור
+   ============================================================ */
+const TASKS = [
+ ["להזמין את הרכב בלרנקה אונליין","נחיתה ב־20:00 באוגוסט. תור בדלפק יעלה לכם 40 דקות מהערב."],
+ ["להודיע ל־Cap St Georges שאתם מגיעים ב־23:00","מלונות משחררים חדרים למי שלא הודיע. שיחה אחת."],
+ ["ספארי הבאגי או הטרקטורון ליום חמישי","יש לכם יום שטח אחד בלבד. אין תאריך חלופי אם זה נמכר."],
+ ["הסירה בלאצ׳י ליום שישי","Blue Diamond — מספר הסירות מוגבל וסופ״ש נחטף."],
+ ["שולחן ל־Andria בשישי בערב","הערב הגדול היחיד שלכם. באוגוסט חייבים להזמין."],
+ ["לוודא מול חברת ההשכרה מה מותר בשטח","שאלה אחת בטלפון שיכולה לחסוך אלפי אירו."],
+ ["לבקש צ׳ק־אאוט מאוחר ב־NYX לראשון","המסיבה נגמרת ב־04:00 וצ׳ק־אאוט ב־12:00. תבקשו בצ׳ק־אין בשבת."],
+ ["לבדוק מתי צריך להחזיר את הרכב בלרנקה","טיסה ב־23:00. תוודאו שהדלפק פתוח ואיפה ממלאים דלק."],
+ ["שולחן ב־Peyia Tavern לחמישי","המקום קטן מאוד, לפעמים כמה ימים מראש."],
+ ["לשמור מספר מונית בטלפון של כולם","לפני הלילה הראשון, לא במהלכו."],
+ ["להחליט מי הנהג התורן בכל לילה","לפני שיוצאים, לא אחרי הבירה השנייה."]
+];
+
+/* ============================================================
+   רינדור
+   ============================================================ */
+const SCREENS = {
+  offroad:{title:"שטח · טרקטורונים, באגי וג׳יפים",
+    intro:"סימנתם את זה ראשון, ולכן זו הרשימה הארוכה. שימו לב לדבר אחד: רכב ההשכרה שלכם לא אמור לרדת מהאספלט. שני המפעילים הראשונים בקוראל ביי, כלומר דקות מהמלון, וזה חוסך שעה של אספלט לכל כיוון לעומת מפעילים מפאפוס."},
+  sea:{title:"ים ואקסטרים",
+    intro:"מהזול לפרוע: מערות הים בחינם במרחק חמש דקות, סירה בהגה שלכם ללגונה הכחולה בלי רישיון שיט, ג׳ט סקי ופליי בורד בקוראל ביי, וצלילה ראשונה מ־€95."},
+  food:{title:"אוכל · טברנות ומסעדות",
+    intro:"טברנה קפריסאית אמיתית זה מזה — עשרות מנות קטנות שמגיעות אחת אחרי השנייה עד שאתם מתפוצצים, בסביבות €20–28 לאדם. לצד זה יש כאן גם את מסעדת הסטייקים הטובה באזור, דגים על החוף, וכמה מקומות זולים לאחרי יום מאובק."},
+  night:{title:"לילה · ברים ומועדונים",
+    intro:"בחרתם מקומי, רחוב הברים ומסיבות יום — אז זה מה שיש כאן. שני דברים שכדאי לדעת מראש: רצועת קוראל ביי קצרה וקטנה אבל היא במרחק מונית קצרה, ורחוב הברים בפאפוס לא מה שהיה — עדיין הכי חי באזור, אבל תגיעו אחרי 23:30."}
+};
+
+function enc(s){return encodeURIComponent(s)}
+const ICON = {
+  waze:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 3 21l9-4 9 4z"/></svg>',
+  map:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.4-7-11a7 7 0 0 1 14 0c0 4.6-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>',
+  link:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h7v7"/><path d="M21 3 10 14"/><path d="M19 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg>',
+  phone:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 3h3l2 5-2.5 1.5a12 12 0 0 0 6 6L15 13l5 2v3a2 2 0 0 1-2.2 2A17 17 0 0 1 3 5.2A2 2 0 0 1 5 3z"/></svg>',
+  chev:'<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>',
+  check:'<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>'
+};
+
+function rail(it){
+  if(it.pickup){
+    return `<div class="rail" aria-label="הסעה">
+      <div class="rail__stop"><span class="rail__pin"></span><span class="rail__min">0 דק׳</span><span class="rail__who">מהמלון</span></div>
+      <div class="rail__line"><span class="rail__km">אוספים אתכם</span></div>
+      <div class="rail__stop rail__stop--b"><span class="rail__pin"></span><span class="rail__min">08:30</span><span class="rail__who">שעת איסוף</span></div>
+    </div>`;
+  }
+  const h=it.hotel, p=it.peyia;
+  const hk = h[0]===0 ? "במלון" : "≈"+h[0]+" ק״מ";
+  return `<div class="rail" aria-label="זמן נסיעה">
+    <div class="rail__stop"><span class="rail__pin"></span><span class="rail__min">${h[1]} דק׳</span><span class="rail__who">מהמלון</span></div>
+    <div class="rail__line"><span class="rail__km">${hk}</span></div>
+    <div class="rail__stop rail__stop--b"><span class="rail__pin"></span><span class="rail__min">${p[1]} דק׳</span><span class="rail__who">ממרכז פיאה</span></div>
+  </div>`;
+}
+
+function card(it,i,key){
+  const q = it.mapq || (it.name+" "+(it.addr||"")+" Cyprus");
+  const tags=(it.tags||[]).map(t=>`<span class="badge badge--tag">${t}</span>`).join("");
+  let acts=`<a class="btn btn--nav" href="https://waze.com/ul?q=${enc(q)}&navigate=yes" target="_blank" rel="noopener">${ICON.waze}ווייז</a>
+             <a class="btn btn--map" href="https://www.google.com/maps/search/?api=1&query=${enc(q)}" target="_blank" rel="noopener">${ICON.map}מפות</a>`;
+  const siteUrl = it.site || ("https://www.google.com/search?q="+enc(q));
+  const siteLbl = it.site ? (it.siteLabel||"אתר רשמי") : "אתר, תפריט ושעות";
+  let acts2=`<a class="btn btn--go" href="${siteUrl}" target="_blank" rel="noopener">${ICON.link}${siteLbl}</a>`;
+  if(it.tel) acts2+=`<a class="btn btn--call" href="tel:${it.tel}">${ICON.phone}חייגו</a>`;
+
+  return `<article class="card" data-min="${it.hotel[1]}" id="${key}-${i}">
+    <button class="card__head" aria-expanded="false" aria-controls="b-${key}-${i}">
+      <div class="card__top">
+        <span class="card__name">${it.name}</span>
+        <span class="card__chev">${ICON.chev}</span>
+      </div>
+      <div class="badges">
+        <span class="badge badge--star">★ ${it.stars}</span>
+        <span class="badge badge--price">${it.price}</span>
+        ${tags}
+      </div>
+      ${rail(it)}
+    </button>
+    <div class="card__body" id="b-${key}-${i}">
+      <h4>מה זה</h4><p>${it.desc}</p>
+      ${it.reviews?`<h4>מה אומרים המבקרים</h4><p class="quote">${it.reviews}</p>`:""}
+      <h4>כתובת</h4><p class="addr">${it.addr}</p>
+      ${it.note?`<div class="note ${/אל תסמכו|לא נכנס|מבטל|קפיצות|אלכוהול|חייבים להזמין/.test(it.note)?"note--warn":""}">${it.note}</div>`:""}
+      ${it.note2?`<div class="note">${it.note2}</div>`:""}
+      <div class="actions actions--2">${acts}</div>
+      <div class="actions ${it.tel?"actions--2":""}">${acts2}</div>
+    </div>
+  </article>`;
+}
+
+function build(){
+  document.getElementById("s-home").innerHTML = HOME_HTML;
+  document.getElementById("s-info").innerHTML = INFO_HTML;
+  document.getElementById("s-limassol").innerHTML = LIMASSOL_HTML;
+
+  Object.keys(SCREENS).forEach(key=>{
+    const s=SCREENS[key];
+    const items=DATA[key];
+    document.getElementById("s-"+key).innerHTML =
+      `<div class="screen__intro"><h2>${s.title}</h2><p>${s.intro}</p></div>
+       <div class="count" data-count="${key}">${items.length} מקומות</div>` +
+      items.map((it,i)=>card(it,i,key)).join("");
+  });
+
+  document.getElementById("tasklist").innerHTML = TASKS.map((t,i)=>
+    `<button class="task" data-task="${i}" aria-pressed="false">
+      <span class="task__box">${ICON.check}</span>
+      <span class="task__txt">${t[0]}<span class="task__why">${t[1]}</span></span>
+    </button>`).join("");
+}
+
+/* ---------- אינטראקציות ---------- */
+document.addEventListener("click", e=>{
+  const head = e.target.closest(".card__head");
+  if(head){
+    const c=head.closest(".card");
+    const open=c.classList.toggle("is-open");
+    head.setAttribute("aria-expanded", open?"true":"false");
+    return;
+  }
+  const tab = e.target.closest(".tab");
+  if(tab){
+    document.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected","false"));
+    tab.setAttribute("aria-selected","true");
+    document.querySelectorAll(".screen").forEach(s=>s.classList.remove("is-active"));
+    document.getElementById(tab.dataset.screen).classList.add("is-active");
+    document.getElementById("scr-title").textContent = tab.dataset.title;
+    window.scrollTo({top:0,behavior:"smooth"});
+    return;
+  }
+  const chip = e.target.closest(".chip");
+  if(chip){
+    document.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed","false"));
+    chip.setAttribute("aria-pressed","true");
+    filter(+chip.dataset.radius);
+    return;
+  }
+  const task = e.target.closest(".task");
+  if(task){
+    const done=task.classList.toggle("is-done");
+    task.setAttribute("aria-pressed", done?"true":"false");
+  }
+});
+
+function filter(max){
+  Object.keys(SCREENS).forEach(key=>{
+    let shown=0;
+    document.querySelectorAll("#s-"+key+" .card").forEach(c=>{
+      const ok = +c.dataset.min <= max;
+      c.classList.toggle("is-hidden", !ok);
+      if(ok) shown++;
+    });
+    const label=document.querySelector('#s-'+key+' [data-count]');
+    if(label) label.textContent = max>=999 ? shown+" מקומות" : shown+" מקומות עד "+max+" דקות מהמלון";
+  });
+}
+
+build();
+</script>
+</body>
+</html>
